@@ -22,4 +22,8 @@ public abstract class CarreauPropriete extends Carreau {
     protected void setPrixLoyer(int prixLoyer) {
         this.prixLoyer = prixLoyer;
     }
+    
+    public abstract void action(Joueur j);
+    
+    public abstract void calculLoyer();
 }
