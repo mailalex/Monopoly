@@ -14,7 +14,7 @@ public class Interface {
     }
     
     public void menu() {
-        Boolean continuer = new Boolean(true);
+        Boolean continuer = true;
         
         while (continuer) {            
             so.println("\n\n");
