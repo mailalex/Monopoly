@@ -110,7 +110,7 @@ public class Joueur {
     
     public void addGare(Gare propriete){
         gares.add(propriete);
-}
+    }
     public void addCompagnie(Compagnie propriete){
         compagnies.add(propriete);
     }

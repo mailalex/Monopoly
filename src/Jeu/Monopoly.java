@@ -155,7 +155,7 @@ public class Monopoly {
     }
     
     private void jouerPartie() {
-        while (this.ordreJoueur.size() >= 2) {
+        while (this.ordreJoueur.size() > 2) {
             this.interface_3.afficherln("");
             this.interface_3.afficherln("");
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
@@ -166,12 +166,10 @@ public class Monopoly {
                 this.interface_3.afficherln("");
                 this.interface_3.afficherln(nomJoueur);
                 boolean b = this.jouerCoup(j,y);
-                this.interface_3.afficherln("\t"+j.getPositionJoueur());
                 this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
                 while (b && y<3) {                
                     b = this.jouerCoup(j,y);
                     y++;
-                    this.interface_3.afficherln("\t"+j.getPositionJoueur());
                     this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
                 }
                 //faire jouer coup au joueur sélectionner
@@ -216,4 +214,4 @@ public class Monopoly {
         Random rand = new Random();
         return rand.nextInt(6)+1;
     }
-}
+} 

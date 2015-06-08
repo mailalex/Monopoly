@@ -13,6 +13,11 @@ public class Groupe {
         this.prixAchatHotel = prixAchatHotel;
         this.couleur = couleur;
     }
+    
+    public ArrayList<ProprieteAConstruire> getProprietes() {
+        return proprietes;
+    }
+
 
     public int getPrixAchatMaison() {
         return prixAchatMaison;
