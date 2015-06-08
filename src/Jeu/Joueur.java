@@ -66,7 +66,11 @@ public class Joueur {
     }
     
     public boolean deplacement(int nouvellePosition) {
-        this.setPositionJoueur(nouvellePosition%40);
+        int position = nouvellePosition%40;
+        if (position == 0) {
+            position = 40;
+        }
+        this.setPositionJoueur(position);
         return true;
     }
     
