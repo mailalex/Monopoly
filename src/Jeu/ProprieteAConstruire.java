@@ -38,4 +38,14 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void setNbHotel(int nbHotel) {
         this.nbHotel = nbHotel;
     }
+
+    @Override
+    public void calculLoyer() {
+       
+    }
+
+    @Override
+    public void action(Joueur j) {
+   
+    }
 }

@@ -23,6 +23,10 @@ public class Monopoly {
         menuUI();
     }
 
+    public Hashtable<String, Joueur> getJoueurs() {
+        return joueurs;
+    }
+
     public Hashtable<Integer, Carreau> getCarreaux() {
         return carreaux;
     }
