@@ -155,7 +155,7 @@ public class Monopoly {
     }
     
     private void jouerPartie() {
-        while (this.ordreJoueur.size() >= 2) {
+        while (this.ordreJoueur.size() > 2) {
             this.interface_3.afficherln("");
             this.interface_3.afficherln("");
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
@@ -166,12 +166,10 @@ public class Monopoly {
                 this.interface_3.afficherln("");
                 this.interface_3.afficherln(nomJoueur);
                 boolean b = this.jouerCoup(j,y);
-                this.interface_3.afficherln("\t"+j.getPositionJoueur());
                 this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
                 while (b && y<3) {                
                     b = this.jouerCoup(j,y);
                     y++;
-                    this.interface_3.afficherln("\t"+j.getPositionJoueur());
                     this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
                 }
                 //faire jouer coup au joueur sélectionner
@@ -180,6 +178,13 @@ public class Monopoly {
     }
     
     private boolean jouerCoup(Joueur j, int y){
+        if (j.estEnPrison() && j.getNbCarteEchapper()>0){
+            this.interface_3.afficherln("Utiliser la carte libérer de prison?(oui/non)");
+            if(this.interface_3.lire()=="oui"){
+                j.retirerCarteEchapper();
+                j.sortirPrison();
+            }
+        }
         int dé1 = this.lancerDé();
         int dé2 = this.lancerDé();
         int deplacement = dé1 + dé2;
@@ -190,7 +195,7 @@ public class Monopoly {
             Carreau c = this.carreaux.get(p);
             return dé1==dé2;
         } else if (j.getPrison() == 3) {
-            j.préleverArgent(50);
+            j.retirerCash(50);
             j.sortirPrison();
             j.deplacement(j.getPositionJoueur()+deplacement);
             int p = j.getPositionJoueur();
@@ -209,4 +214,4 @@ public class Monopoly {
         Random rand = new Random();
         return rand.nextInt(6)+1;
     }
-}
+} 
