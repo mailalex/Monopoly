@@ -11,6 +11,7 @@ public class Joueur {
     private final ArrayList<Gare> gares = new ArrayList<Gare>();
     private final ArrayList<ProprieteAConstruire> proprietesAConstruire = new ArrayList<ProprieteAConstruire>();
     private int prison = 0;
+    private int nbCarteEchapper =0;
 
     public Joueur(String nomJoueur, Monopoly monopoly) {
         this.nomJoueur = nomJoueur;
@@ -45,6 +46,18 @@ public class Joueur {
         return positionJoueur;
     }
 
+    public int getNbCarteEchapper() {
+        return nbCarteEchapper;
+    }
+    
+    public void addCarteEchapper(){
+        nbCarteEchapper++;
+    }
+    
+    public void retirerCarteEchapper(){
+        nbCarteEchapper--;
+    }
+    
     public int getPrison() {
         return prison;
     }
@@ -74,7 +87,7 @@ public class Joueur {
         return true;
     }
     
-    public void préleverArgent(int montant) {
+    public void retirerCash(int montant) {
         this.setCash(this.getCash()-montant);
     }
     
@@ -94,4 +107,19 @@ public class Joueur {
     public boolean estEnPrison() {
         return this.getPrison()!=0;
     }
+    
+    public void addGare(Gare propriete){
+        gares.add(propriete);
+}
+    public void addCompagnie(Compagnie propriete){
+        compagnies.add(propriete);
+    }
+    public void addPropriete(ProprieteAConstruire propriete){
+        proprietesAConstruire.add(propriete);
+    }
+    
+    public boolean possèdeRue(CouleurPropriete couleur){
+       return true;
+    }
+    
 }

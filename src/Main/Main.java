@@ -14,6 +14,6 @@ import Jeu.Monopoly;
  */
 public class Main {
     public static void main(String[] args) {
-            Monopoly m = new Monopoly("/users/info/etu-s2/mailalex/M2104/Monopoly/src/Data/data.txt");
+            Monopoly m = new Monopoly("src/Data/data.txt");
     }
 }

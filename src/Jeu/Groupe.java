@@ -13,5 +13,28 @@ public class Groupe {
         this.prixAchatHotel = prixAchatHotel;
         this.couleur = couleur;
     }
-        
+
+    public int getPrixAchatMaison() {
+        return prixAchatMaison;
+    }
+
+    public void setPrixAchatMaison(int prixAchatMaison) {
+        this.prixAchatMaison = prixAchatMaison;
+    }
+
+    public int getPrixAchatHotel() {
+        return prixAchatHotel;
+    }
+
+    public void setPrixAchatHotel(int prixAchatHotel) {
+        this.prixAchatHotel = prixAchatHotel;
+    }
+
+    public CouleurPropriete getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(CouleurPropriete couleur) {
+        this.couleur = couleur;
+    }
 }

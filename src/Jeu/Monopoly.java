@@ -180,6 +180,13 @@ public class Monopoly {
     }
     
     private boolean jouerCoup(Joueur j, int y){
+        if (j.estEnPrison() && j.getNbCarteEchapper()>0){
+            this.interface_3.afficherln("Utiliser la carte libérer de prison?(oui/non)");
+            if(this.interface_3.lire()=="oui"){
+                j.retirerCarteEchapper();
+                j.sortirPrison();
+            }
+        }
         int dé1 = this.lancerDé();
         int dé2 = this.lancerDé();
         int deplacement = dé1 + dé2;
@@ -190,7 +197,7 @@ public class Monopoly {
             Carreau c = this.carreaux.get(p);
             return dé1==dé2;
         } else if (j.getPrison() == 3) {
-            j.préleverArgent(50);
+            j.retirerCash(50);
             j.sortirPrison();
             j.deplacement(j.getPositionJoueur()+deplacement);
             int p = j.getPositionJoueur();
