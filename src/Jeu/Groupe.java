@@ -18,7 +18,6 @@ public class Groupe {
         return proprietes;
     }
 
-
     public int getPrixAchatMaison() {
         return prixAchatMaison;
     }

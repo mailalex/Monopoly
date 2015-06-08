@@ -1,11 +1,13 @@
 package Jeu;
 
 public abstract class CarreauPropriete extends Carreau {
+    private int prixLoyer;
     private final int prixAchat;
     private Joueur proprietaire;
     
     public CarreauPropriete(int prixLoyer, int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
         super(numero, nomCarreau, monopoly);
+        this.prixLoyer = prixLoyer;
         this.prixAchat = prixAchat;
     }
     
@@ -13,12 +15,11 @@ public abstract class CarreauPropriete extends Carreau {
         return prixAchat;
     }
     
-     public Joueur getProprio() {
-        return proprietaire;
-        }
+    public int getPrixLoyer() {
+        return prixLoyer;
+    }
     
-     public abstract void action(Joueur j);
-
-    public abstract void calculLoyer();
-
+    protected void setPrixLoyer(int prixLoyer) {
+        this.prixLoyer = prixLoyer;
+    }
 }
