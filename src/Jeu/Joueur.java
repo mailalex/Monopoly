@@ -118,8 +118,8 @@ public class Joueur {
         proprietesAConstruire.add(propriete);
     }
     
-    public boolean possèdeRue(CouleurPropriete couleur){
-       return true;
+    public boolean possèdeRue(Groupe groupe){
+       return(getProprietesAConstruire().containsAll(groupe.getProprietes()));
     }
     
 }
