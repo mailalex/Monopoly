@@ -1,5 +1,6 @@
 package UI;
 
+import Jeu.Joueur;
 import Jeu.Monopoly;
 import java.io.PrintStream;
 import java.util.Scanner;
@@ -49,7 +50,7 @@ public class Interface {
                     break;
                 }
                 case 4:{
-                    this.monopoly.afficherJoueurs();
+                    afficherJoueurs(monopoly);
                     continuer=true;
                     break;
                 }
@@ -75,4 +76,52 @@ public class Interface {
     public int lireInt() {
         return sc.nextInt();
     }
+    
+    //Affichage
+    
+    public void afficherPasAssezCash(){
+        afficherln("Pas assez d'argent.");
+    }
+    public void afficherCashRestant(Joueur j){
+        afficherln("Argent restant : "+j.getCash());
+    }
+    public void afficherDemandeNom(){
+        afficherln("Nom de joueur : ");
+    }
+    public void afficherNomJoueur(Joueur j){
+        afficherln(""+j.getCash());
+    }
+    public void afficherJoueurs(Monopoly m) {
+        for (String nomJoueur : m.getJoueurs().keySet()) {
+            afficherln(nomJoueur);
+        }
+    }
+    public void afficherCarteSortiePrison(){
+        afficherln("Utiliser la carte libérer de prison?(oui/non)");
+    }
+    public void afficherPositionJoueur(Joueur j){
+        afficherln("\t" + monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau());
+    }
+    public void afficherOrdrePassageJoueur(Object[] max, int i){
+        afficherln((String) max[0] + " joue à la place : " + i);
+    }
+    public void afficherDemandeAchatPropriete(Jeu.ProprieteAConstruire a){
+        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + "au prix de " + a.getPrixAchat() + "du groupe" + a.getGroupe().getCouleur().toString() + "?(oui/non)");
+    }
+    public void afficherDemandeAchat(Jeu.CarreauPropriete a){
+        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + "au prix de " + a.getPrixAchat() + "?(oui/non)");
+    }
+    
+    //Lecture
+    
+    public boolean lireOui(){
+        String s;
+        s = lire();
+        while(!s.equalsIgnoreCase("oui")||!s.equalsIgnoreCase("non")){
+            afficherln("Saisie incorecte, répondez par oui ou non");
+            s = lire();
+        }
+        return(s.equalsIgnoreCase("oui"));
+    }
+    
 }

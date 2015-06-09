@@ -56,35 +56,27 @@ public class Monopoly {
                     }
                     P = new ProprieteAConstruire(Integer.parseInt(data.get(i)[6]), g, Integer.parseInt(data.get(i)[5]), Integer.parseInt(data.get(i)[4]), Integer.parseInt(data.get(i)[1]), data.get(i)[2],this);
                     this.carreaux.put(i+1, P);
-                    System.out.println("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("G") == 0){
                     Gare G = new Gare(50, Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, G);
-                    System.out.println("Gare :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("C") == 0){
                     Compagnie C = new Compagnie(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, C);
-                    System.out.println("Compagnie :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CT") == 0){
                     CarreauTirage CT = new CarreauTirage(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CT);
-                    System.out.println("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CA") == 0){
                     CarreauArgent CA = new CarreauArgent(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CA);
-                    System.out.println("Case Argent :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CM") == 0){
                     CarreauMouvement CM = new CarreauMouvement(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CM);
-                    System.out.println("Case Mouvement :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
-                else
-                    System.err.println("[buildGamePleateau()] : Invalid Data type");
             }
 
         } 
@@ -115,7 +107,7 @@ public class Monopoly {
     }
     
     public boolean créerJoueur() {
-        interface_3.afficher("Nom du joueur : ");
+        interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         Joueur J = new Joueur(nom, this);
         this.joueurs.put(J.getNomJoueur(),J);
@@ -123,16 +115,10 @@ public class Monopoly {
     }
     
     public boolean supprimerJoueur() {
-        interface_3.afficher("Nom du joueur : ");
+        interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         this.joueurs.remove(nom);
         return true;
-    }
-    
-    public void afficherJoueurs() {
-        for (String nomJoueur : joueurs.keySet()) {
-            this.interface_3.afficherln(nomJoueur);
-        }
     }
     
     public void débuterPartie() {
@@ -156,28 +142,24 @@ public class Monopoly {
             }
             this.ordreJoueur.put(i, (String) max[0]);
             jeuDé.remove((String) max[0]);
-            this.interface_3.afficherln((String) max[0] + " joue à la place : " + i);
+            this.interface_3.afficherOrdrePassageJoueur(max, i);
         }
         this.jouerPartie();
     }
     
     private void jouerPartie() {
         while (this.ordreJoueur.size() > 2) {
-            this.interface_3.afficherln("");
-            this.interface_3.afficherln("");
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
                 int y = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
-                this.interface_3.afficherln("");
-                this.interface_3.afficherln("");
-                this.interface_3.afficherln(nomJoueur);
+                this.interface_3.afficherNomJoueur(j);
                 boolean b = this.jouerCoup(j,y);
-                this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
+                this.interface_3.afficherPositionJoueur(j);
                 while (b && y<3) {                
                     b = this.jouerCoup(j,y);
                     y++;
-                    this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
+                    this.interface_3.afficherPositionJoueur(j);
                 }
                 //faire jouer coup au joueur sélectionner
             }
@@ -190,8 +172,8 @@ public class Monopoly {
     
     private boolean jouerCoup(Joueur j, int y){
         if (j.estEnPrison() && j.getNbCarteEchapper()>0){
-            this.interface_3.afficherln("Utiliser la carte libérer de prison?(oui/non)");
-            if(this.interface_3.lire()=="oui"){
+            this.interface_3.afficherCarteSortiePrison();
+            if(this.interface_3.lireOui()){
                 j.retirerCarteEchapper();
                 j.sortirPrison();
             }

@@ -11,6 +11,16 @@ public class Groupe {
         this.prixAchatMaison = prixAchatMaison;
         this.couleur = couleur;
     }
+   
+    public boolean toutConstruit(){
+        boolean b =true;
+        for(int i = 0 ;i<=proprietes.size();i++){
+            if(proprietes.get(i).getNbHotel()==0){
+                b=false;
+            }
+        }
+        return b;
+    }
 
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
