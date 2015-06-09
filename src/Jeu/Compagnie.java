@@ -30,8 +30,8 @@ public class Compagnie extends CarreauPropriete {
     public void action(Joueur j) {
         if(getProprietaire()==null){
             achatCompagnie(j);
-   } if(getProprietaire()==j){}
-   else{j.payerLoyer(getProprietaire(), this);}
+        } else if(getProprietaire()!=j){
+            j.payerLoyer(getProprietaire(), this);
+        }
     }
-    
 }

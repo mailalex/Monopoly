@@ -125,6 +125,7 @@ public class Joueur {
     public void payerLoyer(Joueur j, CarreauPropriete c){
         c.calculLoyer();
         c.getProprietaire().setCash(cash+c.getLoyer());
+        c.getProprietaire().setCash(cash+c.getLoyer());
         j.setCash(cash-c.getLoyer());
     }
 }
