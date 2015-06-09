@@ -169,8 +169,6 @@ public class Monopoly {
                 int y = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
-                this.interface_3.afficherln("");
-                this.interface_3.afficherln("");
                 this.interface_3.afficherln(nomJoueur);
                 boolean b = this.jouerCoup(j,y);
                 this.interface_3.afficherln("\t"+j.getPositionJoueur());
