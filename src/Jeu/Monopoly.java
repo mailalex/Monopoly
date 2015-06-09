@@ -179,9 +179,19 @@ public class Monopoly {
                     b = this.jouerCoup(j,y);
                     y++;
                     this.interface_3.afficherln("\t"+j.getPositionJoueur());
-                    this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
+                    Carreau c = this.carreaux.get(j.getPositionJoueur());
+                    this.interface_3.afficherln("\t" + c.getNomCarreau());
+                    if (j.getPositionJoueur() == 31) {
+                        j.metrreEnPrison();
+                        this.interface_3.afficherln("\t"+j.getPositionJoueur());
+                        c = this.carreaux.get(j.getPositionJoueur());
+                        this.interface_3.afficherln("\t" + c.getNomCarreau());
+                    }
                 }
                 //faire jouer coup au joueur sélectionner
+                if (j.getCash() <= 0) {
+                    j.joueurMeurt(i);
+                }
             }
         }
     }
@@ -209,10 +219,10 @@ public class Monopoly {
             return dé1==dé2;
         } else if (j.getPrison() == 3) {
             j.retirerCash(50);
-            j.sortirPrison();
-            j.deplacement(j.getPositionJoueur()+deplacement);
-            int p = j.getPositionJoueur();
-            Carreau c = this.carreaux.get(p);
+            if (j.getCash() > 0) {
+                j.sortirPrison();
+                j.deplacement(j.getPositionJoueur()+deplacement);
+            }
             return dé1==dé2;
         } else if (!j.estEnPrison() && dé1==dé2 && y == 3) {
             j.metrreEnPrison();
@@ -226,5 +236,10 @@ public class Monopoly {
     private int lancerDé() {
         Random rand = new Random();
         return rand.nextInt(6)+1;
+    }
+
+    void retirerJoueur(Joueur j, int i) {
+        this.joueurs.remove(j.getNomJoueur());
+        this.ordreJoueur.remove(i);
     }
 } 

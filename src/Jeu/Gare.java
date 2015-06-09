@@ -10,12 +10,12 @@ public class Gare extends CarreauPropriete {
         if(getPrixAchat()>j.getCash()){
             monopoly.interface_3.afficherln("Pas assez d'argent pour acheter "+getNomCarreau());
         }
-    monopoly.interface_3.afficherln("Voulez-vous acheter la "+getNomCarreau()+ "au prix de "+getPrixAchat()+"?(oui/non)");
-    if(monopoly.interface_3.lire()=="oui"){
-        j.retirerCash(getPrixAchat());j.addGare(this);
-         monopoly.interface_3.afficherln("Argent restant : "+j.getCash());
+        monopoly.interface_3.afficherln("Voulez-vous acheter la "+getNomCarreau()+ " au prix de "+getPrixAchat()+"?(oui/non)");
+        if(monopoly.interface_3.lire()=="oui"){
+            j.retirerCash(getPrixAchat());j.addGare(this);
+             monopoly.interface_3.afficherln("Argent restant : "+j.getCash());
+        }
     }
-            }
 
     @Override
     public void calculLoyer() {

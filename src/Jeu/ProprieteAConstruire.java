@@ -44,12 +44,12 @@ public class ProprieteAConstruire extends CarreauPropriete {
         if(getPrixAchat()>j.getCash()){
             monopoly.interface_3.afficherln("Pas assez d'argent pour acheter "+getNomCarreau());
         }
-    monopoly.interface_3.afficherln("Voulez-vous acheter le terrain "+getNomCarreau()+ "au prix de "+getPrixAchat()+"du groupe"+groupePropriete.getCouleur().toString()+"?(oui/non)");
-    if(monopoly.interface_3.lire()=="oui"){
-        j.retirerCash(getPrixAchat());j.addPropriete(this);
-         monopoly.interface_3.afficherln("Argent restant : "+j.getCash());
+        monopoly.interface_3.afficherln("Voulez-vous acheter le terrain "+getNomCarreau()+ " au prix de "+getPrixAchat()+"du groupe"+groupePropriete.getCouleur().toString()+"?(oui/non)");
+        if(monopoly.interface_3.lire()=="oui"){
+            j.retirerCash(getPrixAchat());j.addPropriete(this);
+             monopoly.interface_3.afficherln("Argent restant : "+j.getCash());
+        }
     }
-            }
     
     public void construire(){
         if(getProprietaire().possèdeRue(groupePropriete)){
@@ -65,12 +65,18 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     @Override
     public void action(Joueur j) {
-   if(getProprietaire()==null){
-       achatPropriété(j);
-   }else if(getProprietaire()==j){
-       construire();
-   }else{j.payerLoyer(getProprietaire(),this);
-       
-   }
+        if(getProprietaire()==null){
+            achatPropriété(j);
+        }else if(getProprietaire()==j){
+            construire();
+        }else{
+            j.payerLoyer(getProprietaire(),this);
+        }
+    }
+    
+    public void propriétaireAPerdu() {
+        this.setProprietaire(null);
+        this.setNbHotel(0);
+        this.setNbMaison(0);
     }
 }

@@ -1,6 +1,7 @@
 package Jeu;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Joueur {
     private final String nomJoueur;
@@ -127,5 +128,24 @@ public class Joueur {
         c.getProprietaire().setCash(cash+c.getLoyer());
         c.getProprietaire().setCash(cash+c.getLoyer());
         j.setCash(cash-c.getLoyer());
+    }
+
+    public void joueurMeurt(int positionOrdreJoueur) {
+        for (Iterator<Compagnie> it = this.compagnies.iterator(); it.hasNext();) {
+            Compagnie compagnie = it.next();
+            compagnie.setProprietaire(null);
+        }
+        for (Iterator<Gare> it = this.gares.iterator(); it.hasNext();) {
+            Gare gare = it.next();
+            gare.setProprietaire(null);
+        }
+        for (Iterator<ProprieteAConstruire> it = this.proprietesAConstruire.iterator(); it.hasNext();) {
+            ProprieteAConstruire propriete = it.next();
+            propriete.propriétaireAPerdu();
+        }
+        this.compagnies.clear();
+        this.gares.clear();
+        this.proprietesAConstruire.clear();
+        this.monopoly.retirerJoueur(this, positionOrdreJoueur);
     }
 }
