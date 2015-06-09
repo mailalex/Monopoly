@@ -53,8 +53,6 @@ public class ProprieteAConstruire extends CarreauPropriete {
     
     public void construire(){}
     
-    public void payerLoyer(Joueur j){}
-
     @Override
     public void calculLoyer() {
        
@@ -66,7 +64,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
        achatPropriété(j);
    }else if(proprietaire==j){
        construire();
-   }else{payerLoyer(j);
+   }else{j.payerLoyer(proprietaire,this);
        
    }
     }

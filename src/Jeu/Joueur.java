@@ -117,4 +117,10 @@ public class Joueur {
     public void retirerCarteEchapper(){
         nbCarteEchapper--;
     }
+    
+    public void payerLoyer(Joueur j, CarreauPropriete c){
+        c.calculLoyer();
+        c.proprietaire.setCash(cash+c.loyer);
+        j.setCash(cash-c.loyer);
+    }
 }
