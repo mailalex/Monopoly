@@ -19,7 +19,7 @@ public class Gare extends CarreauPropriete {
 
     @Override
     public void calculLoyer() {
-        loyer=25*proprietaire.getGares().size();
+        setLoyer(25*proprietaire.getGares().size());
     }
 
     @Override

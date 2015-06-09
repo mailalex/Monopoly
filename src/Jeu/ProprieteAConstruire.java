@@ -51,7 +51,12 @@ public class ProprieteAConstruire extends CarreauPropriete {
     }
             }
     
-    public void construire(){}
+    public void construire(){
+        if(proprietaire.possèdeRue(groupePropriete)){
+            groupePropriete.getPrixAchatMaison();
+            
+        }
+    }
     
     @Override
     public void calculLoyer() {

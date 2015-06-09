@@ -20,9 +20,9 @@ public class Compagnie extends CarreauPropriete {
     @Override
     public void calculLoyer() {
         if(proprietaire.getCompagnies().size()==2){
-            loyer=10*monopoly.getDeplacement();
+            setLoyer(10*monopoly.getDeplacement());
         }else{
-            loyer=4*monopoly.getDeplacement();
+            setLoyer(4*monopoly.getDeplacement());
         }
     }
 
