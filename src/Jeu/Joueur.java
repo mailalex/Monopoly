@@ -122,4 +122,9 @@ public class Joueur {
        return(getProprietesAConstruire().containsAll(groupe.getProprietes()));
     }
     
+    public void payerLoyer(Joueur j, CarreauPropriete c){
+        c.calculLoyer();
+        c.getProprietaire().setCash(cash+c.getLoyer());
+        j.setCash(cash-c.getLoyer());
+    }
 }

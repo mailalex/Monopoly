@@ -16,6 +16,9 @@ public class Monopoly {
     private final Hashtable<String,Joueur> joueurs = new Hashtable<String,Joueur>();
     private final Hashtable<Integer,String> ordreJoueur = new Hashtable<Integer, String>();
     public Interface interface_3;
+    private int dé1;
+    private int dé2;
+    private int deplacement;
     
     public Monopoly(String dataFilename){
         buildGamePlateau(dataFilename);
@@ -182,6 +185,10 @@ public class Monopoly {
             }
         }
     }
+
+    public int getDeplacement() {
+        return deplacement;
+    }
     
     private boolean jouerCoup(Joueur j, int y){
         if (j.estEnPrison() && j.getNbCarteEchapper()>0){
@@ -191,9 +198,9 @@ public class Monopoly {
                 j.sortirPrison();
             }
         }
-        int dé1 = this.lancerDé();
-        int dé2 = this.lancerDé();
-        int deplacement = dé1 + dé2;
+        dé1 = this.lancerDé();
+        dé2 = this.lancerDé();
+        deplacement = dé1 + dé2;
         if ((j.estEnPrison() && dé1==dé2) || !j.estEnPrison()) {
             j.sortirPrison();
             j.deplacement(j.getPositionJoueur()+deplacement);

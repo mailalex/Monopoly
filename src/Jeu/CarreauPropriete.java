@@ -1,26 +1,31 @@
 package Jeu;
 
 public abstract class CarreauPropriete extends Carreau {
-    private int prixLoyer;
+    private int loyer;
     private final int prixAchat;
     private Joueur proprietaire;
+
     
-    public CarreauPropriete(int prixLoyer, int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
+    public CarreauPropriete(int loyer, int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
         super(numero, nomCarreau, monopoly);
-        this.prixLoyer = prixLoyer;
+        this.loyer = loyer;
         this.prixAchat = prixAchat;
     }
     
-    public int getPrixVente() {
+    public int getPrixAchat() {
         return prixAchat;
     }
     
-    public int getPrixLoyer() {
-        return prixLoyer;
+    public int getLoyer() {
+        return loyer;
+    }
+
+    public Joueur getProprietaire() {
+        return proprietaire;
     }
     
-    protected void setPrixLoyer(int prixLoyer) {
-        this.prixLoyer = prixLoyer;
+    protected void setLoyer(int loyer) {
+        this.loyer = loyer;
     }
     
     public abstract void action(Joueur j);

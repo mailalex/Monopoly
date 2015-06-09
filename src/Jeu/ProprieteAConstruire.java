@@ -1,6 +1,7 @@
 package Jeu;
 
 import java.util.ArrayList;
+import UI.Interface;
 
 public class ProprieteAConstruire extends CarreauPropriete {
     
@@ -38,7 +39,20 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void setNbHotel(int nbHotel) {
         this.nbHotel = nbHotel;
     }
-
+    
+    public void achatPropriété(Joueur j){
+        if(getPrixAchat()>j.getCash()){
+            monopoly.interface_3.afficherln("Pas assez d'argent pour acheter "+getNomCarreau());
+        }
+    monopoly.interface_3.afficherln("Voulez-vous acheter le terrain "+getNomCarreau()+ "au prix de "+getPrixAchat()+"du groupe"+groupePropriete.getCouleur().toString()+"?(oui/non)");
+    if(monopoly.interface_3.lire()=="oui"){
+        j.retirerCash(getPrixAchat());j.addPropriete(this);
+         monopoly.interface_3.afficherln("Argent restant : "+j.getCash());
+    }
+            }
+    
+    public void construire(){}
+    
     @Override
     public void calculLoyer() {
        
@@ -46,6 +60,12 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     @Override
     public void action(Joueur j) {
-   
+   if(getProprietaire()==null){
+       achatPropriété(j);
+   }else if(getProprietaire()==j){
+       construire();
+   }else{j.payerLoyer(getProprietaire(),this);
+       
+   }
     }
 }
