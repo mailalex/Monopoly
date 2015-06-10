@@ -10,8 +10,24 @@ import java.util.Hashtable;
 import java.util.Random;
 
 public class Monopoly {
-    private final int nbMaisons = 32;
-    private final int nbHotels = 12;
+    private int nbMaisons = 32;
+
+    public int getNbMaisons() {
+        return nbMaisons;
+    }
+
+    public void setNbMaisons(int nbMaisons) {
+        this.nbMaisons = nbMaisons;
+    }
+
+    public int getNbHotels() {
+        return nbHotels;
+    }
+
+    public void setNbHotels(int nbHotels) {
+        this.nbHotels = nbHotels;
+    }
+    private int nbHotels = 12;
     private final Hashtable<Integer,Carreau> carreaux = new Hashtable<Integer,Carreau>();
     private final Hashtable<String,Joueur> joueurs = new Hashtable<String,Joueur>();
     private final Hashtable<Integer,String> ordreJoueur = new Hashtable<Integer, String>();
@@ -173,7 +189,7 @@ public class Monopoly {
     private boolean jouerCoup(Joueur j, int y){
         if (j.estEnPrison() && j.getNbCarteEchapper()>0){
             this.interface_3.afficherCarteSortiePrison();
-            if(this.interface_3.lireOui()){
+            if(this.interface_3.lireRéponse()){
                 j.retirerCarteEchapper();
                 j.sortirPrison();
             }

@@ -10,8 +10,8 @@ public class Gare extends CarreauPropriete {
         if(prixAchat>j.getCash()){
             monopoly.interface_3.afficherPasAssezCash();
         }
-    monopoly.interface_3.afficherDemandeAchat(this);
-    if(monopoly.interface_3.lireOui()){
+    monopoly.interface_3.demandeAchat(this);
+    if(monopoly.interface_3.lireRéponse()){
         j.retirerCash(getPrixAchat());j.addGare(this);
          monopoly.interface_3.afficherCashRestant(j);
     }

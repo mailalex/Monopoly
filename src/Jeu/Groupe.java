@@ -12,13 +12,22 @@ public class Groupe {
         this.couleur = couleur;
     }
    
-    public boolean toutConstruit(){
-        boolean b =true;
-        for(int i = 0 ;i<=proprietes.size();i++){
-            if(proprietes.get(i).getNbHotel()==0){
-                b=false;
-            }
+    public boolean rueConstructible(){
+        int nombreMaison=0;
+        int nombreHotel=0;
+        boolean b;
+        int i;
+        for(i=0;i<=getProprietes().size();i++){
+            nombreHotel+=getProprietes().get(i).getNbHotel();
+            nombreMaison+=getProprietes().get(i).getNbMaisons();
         }
+        if(i==nombreHotel){                                                                 // si tout est déjà construit sur la rue
+            b=false;
+        }else if(nombreMaison<4*i&&getProprietes().get(i).monopoly.getNbMaisons()!=0){      // si il y a plus assez de maison
+            b=false;               
+        }else if (nombreHotel<i&&getProprietes().get(i).monopoly.getNbHotels()!=0){         // si il y a plus assez d'hotel
+            b=false;
+        }else{b=true;}
         return b;
     }
 
