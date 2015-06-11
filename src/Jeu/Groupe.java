@@ -30,7 +30,7 @@ public class Groupe {
         }else{b=true;}
         return b;
     }
-
+    
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
     }

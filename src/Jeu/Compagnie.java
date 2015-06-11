@@ -7,7 +7,7 @@ public class Compagnie extends CarreauPropriete {
     }
 
     public void achatCompagnie(Joueur j){
-        if(getPrixAchat()>j.getCash()){          
+        if(getPrixAchat()>j.getCash()){     
             monopoly.interface_3.afficherPasAssezCash();
         }
     monopoly.interface_3.demandeAchat(this);
@@ -16,22 +16,23 @@ public class Compagnie extends CarreauPropriete {
          monopoly.interface_3.afficherCashRestant(j);
     }
             }
-    
+        
     @Override
     public int calculLoyer() {
-        if(getProprio().getCompagnies().size()==2){
+        if(getProprietaire().getCompagnies().size()==2){
             return(10*monopoly.getDeplacement());
         }else{
             return(4*monopoly.getDeplacement());
         }
     }
-
+    
     @Override
     public void action(Joueur j) {
-        if(getProprio()==null){
+        if(getProprietaire()==null){
             achatCompagnie(j);
-   }else if(getProprio()==j){}
-   else{j.payerLoyer(getProprio(), this);}
+        
+        } else if(getProprietaire()!=j){
+            j.payerLoyer(getProprietaire(), this);
+        }
     }
-    
 }

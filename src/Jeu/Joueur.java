@@ -1,6 +1,7 @@
 package Jeu;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Joueur {
     private final String nomJoueur;
@@ -45,6 +46,18 @@ public class Joueur {
     public int getPositionJoueur() {
         return positionJoueur;
     }
+
+    public int getNbCarteEchapper() {
+        return nbCarteEchapper;
+    }
+    
+    public void addCarteEchapper(){
+        nbCarteEchapper++;
+    }
+    
+    public void retirerCarteEchapper(){
+        nbCarteEchapper--;
+    }
     
     public int getPrison() {
         return prison;
@@ -67,7 +80,11 @@ public class Joueur {
     }
     
     public boolean deplacement(int nouvellePosition) {
-        this.setPositionJoueur(nouvellePosition%40);
+        int position = nouvellePosition%40;
+        if (position == 0) {
+            position = 40;
+        }
+        this.setPositionJoueur(position);
         return true;
     }
     
@@ -106,20 +123,27 @@ public class Joueur {
        return(getProprietesAConstruire().containsAll(groupe.getProprietes()));
     }
     
-     public int getNbCarteEchapper() {
-        return nbCarteEchapper;
-    }
-    
-    public void addCarteEchapper(){
-        nbCarteEchapper++;
-    }
-    
-    public void retirerCarteEchapper(){
-        nbCarteEchapper--;
-    }
-    
     public void payerLoyer(Joueur j, CarreauPropriete c){
-        c.getProprio().setCash(cash+c.calculLoyer());
+        c.getProprietaire().setCash(cash+c.calculLoyer());
         j.setCash(cash-c.calculLoyer());
+    }
+
+    public void joueurMeurt(int positionOrdreJoueur) {
+        for (Iterator<Compagnie> it = this.compagnies.iterator(); it.hasNext();) {
+            Compagnie compagnie = it.next();
+            compagnie.setProprietaire(null);
+        }
+        for (Iterator<Gare> it = this.gares.iterator(); it.hasNext();) {
+            Gare gare = it.next();
+            gare.setProprietaire(null);
+        }
+        for (Iterator<ProprieteAConstruire> it = this.proprietesAConstruire.iterator(); it.hasNext();) {
+            ProprieteAConstruire propriete = it.next();
+            propriete.propriétaireAPerdu();
+        }
+        this.compagnies.clear();
+        this.gares.clear();
+        this.proprietesAConstruire.clear();
+        this.monopoly.retirerJoueur(this, positionOrdreJoueur);
     }
 }

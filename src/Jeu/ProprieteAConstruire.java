@@ -38,15 +38,16 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void achatPropriété(Joueur j) {
         if (getPrixAchat() >= j.getCash()) {
             monopoly.interface_3.afficherPasAssezCash();
-        }
-        monopoly.interface_3.demandeAchat(this);
-        if (monopoly.interface_3.lireRéponse()) {
-            j.retirerCash(getPrixAchat());
-            j.addPropriete(this);
-            monopoly.interface_3.afficherCashRestant(j);
+        } else {
+            monopoly.interface_3.demandeAchat(this);
+            if (monopoly.interface_3.lireRéponse()) {
+                j.retirerCash(getPrixAchat());
+                j.addPropriete(this);
+                monopoly.interface_3.afficherCashRestant(j);
+            }
         }
     }
-    
+            
     public ArrayList<ProprieteAConstruire> terrainsConstructibles(){
         ArrayList<ProprieteAConstruire>  a = null;
         for(int i=0;i<=getGroupe().getProprietes().size();i++){                                                 // le cas ou this est pas un terrain constuctible
@@ -67,7 +68,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void construire() {
         boolean veutConstruire = true;
         boolean peutConstruire = true;
-        peutConstruire=(!getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprio().getCash()&&getProprio().possèdeRue(groupePropriete));  
+        peutConstruire=(!getGroupe().rueConstructible() && getGroupe().getPrixAchatMaison() < getProprietaire().getCash() && getProprietaire().possèdeRue(groupePropriete));  
         if(peutConstruire){                                                                                               // si le joueur peut construire
             monopoly.interface_3.demandeConstruction(this);
             veutConstruire=monopoly.interface_3.lireRéponse();                                                          // si le joueur veut construire
@@ -84,9 +85,9 @@ public class ProprieteAConstruire extends CarreauPropriete {
                         monopoly.setNbMaisons(monopoly.getNbMaisons()+4);
                         monopoly.setNbHotels(monopoly.getNbHotels()-1);
                     }
-                    getProprio().retirerCash(getGroupe().getPrixAchatMaison());                                          //retire l'argent de la construction
+                    getProprietaire().retirerCash(getGroupe().getPrixAchatMaison());                                          //retire l'argent de la construction
                 }
-                peutConstruire=(!getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprio().getCash());
+                peutConstruire=(!getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprietaire().getCash());
                 monopoly.interface_3.demandeConstruction(this);
                 veutConstruire=monopoly.interface_3.lireRéponse();                          // revérifie si le joueur peut et veux construire dans le loop
             }
@@ -112,13 +113,21 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     @Override
     public void action(Joueur j) {
-        if (getProprio() == null) {
+        if (getProprietaire()== null) {
             achatPropriété(j);
-        } else if (getProprio() == j) {
+        } else if (getProprietaire()== j) {
             construire();
         } else {
-            j.payerLoyer(getProprio(), this);
+            j.payerLoyer(getProprietaire(), this);
 
         }
+    }
+    
+    public void propriétaireAPerdu() {
+        this.setProprietaire(null);
+        this.monopoly.setNbHotels(this.getNbHotel());
+        this.setNbHotel(0);
+        this.monopoly.setNbMaisons(this.getNbMaisons());
+        this.setNbMaison(0);
     }
 }
