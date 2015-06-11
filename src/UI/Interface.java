@@ -1,5 +1,6 @@
 package UI;
 
+import Jeu.Carreau;
 import Jeu.Joueur;
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
@@ -99,6 +100,9 @@ public class Interface {
             afficherln(nomJoueur);
         }
     }
+    public void afficherDéplacement(Joueur j){
+        afficherln("Le joueur "+j.getNomJoueur()+"est arrivé sur le carreau "+j.getPositionJoueur());
+    }
     public void afficherCarteSortiePrison(){
         afficherln("Utiliser la carte libérer de prison?(oui/non)");
     }
@@ -140,10 +144,10 @@ public class Interface {
         String s;
         s = lire();
         s = s.toLowerCase();
-        boolean b = s==("oui") || s==("non");
-        while(b/*(!s.equalsIgnoreCase("oui"))||(!s.equalsIgnoreCase("non"))*/){
+        while(s==("oui") || s==("non")){
             afficherln("Saisie incorecte, répondez par oui ou non");
             s = lire();
+            s = s.toLowerCase();
         }
         return(s.equalsIgnoreCase("oui"));
     }

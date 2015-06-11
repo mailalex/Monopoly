@@ -162,6 +162,7 @@ public class Monopoly {
         boolean fini = false;
         while (!fini) {
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
+                
                 int nbLancerDés = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
@@ -192,8 +193,7 @@ public class Monopoly {
         dé1 = this.lancerDé();
         dé2 = this.lancerDé();
         deplacement = dé1 + dé2;
-        if ((j.estEnPrison() && dé1 == dé2) || !j.estEnPrison()) {
-            j.sortirPrison();
+        if (!j.estEnPrison()) {
             j.deplacement(j.getPositionJoueur() + deplacement);
             int p = j.getPositionJoueur();
             Carreau c = this.carreaux.get(p);

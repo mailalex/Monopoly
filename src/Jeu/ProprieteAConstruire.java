@@ -36,7 +36,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
     }
 
     public void achatPropriété(Joueur j) {
-        if (prixAchat >= j.getCash()) {
+        if (getPrixAchat() >= j.getCash()) {
             monopoly.interface_3.afficherPasAssezCash();
         }
         monopoly.interface_3.demandeAchat(this);
@@ -79,7 +79,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                         this.terrainsConstructibles().get(j).setNbMaison(getNbMaisons()+1);                             
                         monopoly.setNbMaisons(monopoly.getNbMaisons()-1);                                                   
                     }else{
-                        this.terrainsConstructibles().get(j).setNbMaison(0);
+                        this.terrainsConstructibles().get(j).setNbMaison(0);                        
                         this.terrainsConstructibles().get(j).setNbHotel(1);
                         monopoly.setNbMaisons(monopoly.getNbMaisons()+4);
                         monopoly.setNbHotels(monopoly.getNbHotels()-1);
@@ -88,7 +88,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 }
                 peutConstruire=(!getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprio().getCash());
                 monopoly.interface_3.demandeConstruction(this);
-                veutConstruire=monopoly.interface_3.lireRéponse();                          // revérifie sir le joueur peut et veux construire dans le loop
+                veutConstruire=monopoly.interface_3.lireRéponse();                          // revérifie si le joueur peut et veux construire dans le loop
             }
          }
     }
@@ -112,12 +112,12 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     @Override
     public void action(Joueur j) {
-        if (proprietaire == null) {
+        if (getProprio() == null) {
             achatPropriété(j);
-        } else if (proprietaire == j) {
+        } else if (getProprio() == j) {
             construire();
         } else {
-            j.payerLoyer(proprietaire, this);
+            j.payerLoyer(getProprio(), this);
 
         }
     }

@@ -7,7 +7,7 @@ public class Gare extends CarreauPropriete {
     }
     
     public void achatGare(Joueur j){
-        if(prixAchat>j.getCash()){
+        if(getPrixAchat()>j.getCash()){
             monopoly.interface_3.afficherPasAssezCash();
         }
     monopoly.interface_3.demandeAchat(this);
@@ -19,15 +19,15 @@ public class Gare extends CarreauPropriete {
 
     @Override
     public int calculLoyer() {
-        return(25*proprietaire.getGares().size());
+        return(25*getProprio().getGares().size());
     }
 
     @Override
     public void action(Joueur j) {
-         if(proprietaire==null){
+         if(getProprio()==null){
        achatGare(j);
-   }else if(proprietaire==j){}
-   else{j.payerLoyer(proprietaire, this);}
+   }else if(getProprio()==j){}
+   else{j.payerLoyer(getProprio(), this);}
    }
     
 }

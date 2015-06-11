@@ -1,8 +1,8 @@
 package Jeu;
 
 public abstract class CarreauPropriete extends Carreau {
-    protected final int prixAchat;
-    protected Joueur proprietaire;
+    private final int prixAchat;
+    private Joueur proprietaire;
     
     public CarreauPropriete( int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
         super(numero, nomCarreau, monopoly);
