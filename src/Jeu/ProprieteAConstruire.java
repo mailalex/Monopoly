@@ -7,21 +7,16 @@ public class ProprieteAConstruire extends CarreauPropriete {
 
     private int nbMaisons = 0;
     private int nbHotel = 0;
-    private int loyerMaison;
     private final Groupe groupePropriete;
+    private ArrayList<Integer> loyer;
 
-    public ProprieteAConstruire(int loyerMaison, Groupe groupePropriete, int prixLoyer, int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
-        super(prixLoyer, prixAchat, numero, nomCarreau, monopoly);
-        this.loyerMaison = loyerMaison;
-        this.groupePropriete = groupePropriete;
+    public ProprieteAConstruire(ArrayList<Integer> loyer, int prixAchat, int numero, Groupe groupePropriete, String nomCarreau, Monopoly monopoly) {
+        super(prixAchat, numero, nomCarreau, monopoly);
+        this.loyer=loyer;
+        this.groupePropriete=groupePropriete;
     }
-
     public int getNbMaisons() {
         return nbMaisons;
-    }
-
-    public int getLoyerMaison() {
-        return loyerMaison;
     }
 
     public Groupe getGroupe() {
@@ -100,8 +95,20 @@ public class ProprieteAConstruire extends CarreauPropriete {
     }
 
     @Override
-    public void calculLoyer() {
-
+    public int calculLoyer() {
+        if(nbHotel==1){
+            return loyer.get(5);
+        }else if(nbMaisons==4){
+            return loyer.get(4);
+        }else if(nbMaisons==3){
+            return loyer.get(3);
+        }else if(nbMaisons==2){
+            return loyer.get(2);
+        }else if(nbMaisons==1){
+            return loyer.get(1);
+        }else{
+            return loyer.get(0);
+        }
     }
 
     @Override
@@ -117,7 +124,9 @@ public class ProprieteAConstruire extends CarreauPropriete {
     
     public void propriétaireAPerdu() {
         this.setProprietaire(null);
+        this.monopoly.setNbHotels(this.getNbHotel());
         this.setNbHotel(0);
+        this.monopoly.setNbMaisons(this.getNbMaisons());
         this.setNbMaison(0);
     }
 }

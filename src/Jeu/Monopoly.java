@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.Random;
 
 public class Monopoly {
+
     private int nbMaisons = 32;
 
     public int getNbMaisons() {
@@ -28,15 +29,15 @@ public class Monopoly {
         this.nbHotels = nbHotels;
     }
     private int nbHotels = 12;
-    private final Hashtable<Integer,Carreau> carreaux = new Hashtable<Integer,Carreau>();
-    private final Hashtable<String,Joueur> joueurs = new Hashtable<String,Joueur>();
-    private final Hashtable<Integer,String> ordreJoueur = new Hashtable<Integer, String>();
+    private final Hashtable<Integer, Carreau> carreaux = new Hashtable<Integer, Carreau>();
+    private final Hashtable<String, Joueur> joueurs = new Hashtable<String, Joueur>();
+    private final Hashtable<Integer, String> ordreJoueur = new Hashtable<Integer, String>();
     public Interface interface_3;
     private int dé1;
     private int dé2;
     private int deplacement;
-    
-    public Monopoly(String dataFilename){
+
+    public Monopoly(String dataFilename) {
         buildGamePlateau(dataFilename);
         interface_3 = new Interface(this);
         menuUI();
@@ -50,67 +51,62 @@ public class Monopoly {
         return carreaux;
     }
 
-    private void buildGamePlateau(String dataFilename)
-    {        
-        try{
+    private void buildGamePlateau(String dataFilename) {
+        try {
             ArrayList<String[]> data = readDataFile(dataFilename, ",");
-            System.out.println(""+data.size());
-            //TODO: create cases instead of displaying
             ProprieteAConstruire P = null;
             Groupe g = null;
-            for(int i=0; i<data.size(); ++i){
+            for (int i = 0; i < data.size(); ++i) {
                 String caseType = data.get(i)[0];
-                if(caseType.compareTo("P") == 0){
+                if (caseType.compareTo("P") == 0) {
                     if (P != null) {
                         if (P.getGroupe().equals(CouleurPropriete.valueOf(data.get(i)[3]))) {
                             g = P.getGroupe();
                         } else {
-                            g = new Groupe(Integer.parseInt(data.get(i)[11]), Integer.parseInt(data.get(i)[12]), CouleurPropriete.valueOf(data.get(i)[3]));
+                            g = new Groupe(Integer.parseInt(data.get(i)[11]), CouleurPropriete.valueOf(data.get(i)[3]));
                         }
                     } else {
-                        g = new Groupe(Integer.parseInt(data.get(i)[11]), Integer.parseInt(data.get(i)[12]), CouleurPropriete.valueOf(data.get(i)[3]));
+                        g = new Groupe(Integer.parseInt(data.get(i)[11]), CouleurPropriete.valueOf(data.get(i)[3]));
                     }
-                    P = new ProprieteAConstruire(Integer.parseInt(data.get(i)[6]), g, Integer.parseInt(data.get(i)[5]), Integer.parseInt(data.get(i)[4]), Integer.parseInt(data.get(i)[1]), data.get(i)[2],this);
-                    this.carreaux.put(i+1, P);
-                }
-                else if(caseType.compareTo("G") == 0){
-                    Gare G = new Gare(50, Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
-                    this.carreaux.put(i+1, G);
-                }
-                else if(caseType.compareTo("C") == 0){
+                    ArrayList<Integer> loyer = new ArrayList();
+                    loyer.add(Integer.parseInt(data.get(i)[4]));
+                    loyer.add(Integer.parseInt(data.get(i)[5]));
+                    loyer.add(Integer.parseInt(data.get(i)[6]));
+                    loyer.add(Integer.parseInt(data.get(i)[7]));
+                    loyer.add(Integer.parseInt(data.get(i)[8]));
+                    loyer.add(Integer.parseInt(data.get(i)[9]));
+                    P = new ProprieteAConstruire(loyer, Integer.parseInt(data.get(i)[4]), Integer.parseInt(data.get(i)[1]), g, data.get(i)[2], this);
+                    g.addPropriete(P);
+                    this.carreaux.put(i + 1, P);
+                } else if (caseType.compareTo("G") == 0) {
+                    Gare G = new Gare(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
+                    this.carreaux.put(i + 1, G);
+                } else if (caseType.compareTo("C") == 0) {
                     Compagnie C = new Compagnie(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
-                    this.carreaux.put(i+1, C);
-                }
-                else if(caseType.compareTo("CT") == 0){
+                    this.carreaux.put(i + 1, C);
+                } else if (caseType.compareTo("CT") == 0) {
                     CarreauTirage CT = new CarreauTirage(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
-                    this.carreaux.put(i+1, CT);
-                }
-                else if(caseType.compareTo("CA") == 0){
+                    this.carreaux.put(i + 1, CT);
+                } else if (caseType.compareTo("CA") == 0) {
                     CarreauArgent CA = new CarreauArgent(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
-                    this.carreaux.put(i+1, CA);
-                }
-                else if(caseType.compareTo("CM") == 0){
+                    this.carreaux.put(i + 1, CA);
+                } else if (caseType.compareTo("CM") == 0) {
                     CarreauMouvement CM = new CarreauMouvement(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
-                    this.carreaux.put(i+1, CM);
+                    this.carreaux.put(i + 1, CM);
                 }
             }
 
-        } 
-        catch(FileNotFoundException e){
-            System.err.println("[buildGamePlateau()] : File is not found!");
-        }
-        catch(IOException e){
-            System.err.println("[buildGamePlateau()] : Error while reading file!");
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
         }
     }
 
-    private ArrayList<String[]> readDataFile(String filename, String token) throws FileNotFoundException, IOException
-    {
+    private ArrayList<String[]> readDataFile(String filename, String token) throws FileNotFoundException, IOException {
         ArrayList<String[]> data = new ArrayList<String[]>();
 
-        BufferedReader reader  = new BufferedReader(new FileReader(filename));
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
         String line = null;
-        while((line = reader.readLine()) != null){
+        while ((line = reader.readLine()) != null) {
             data.add(line.split(token));
         }
         reader.close();
@@ -121,67 +117,64 @@ public class Monopoly {
     private void menuUI() {
         interface_3.menu();
     }
-    
-    public boolean créerJoueur() {
+
+    public void créerJoueur() {
         interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         Joueur J = new Joueur(nom, this);
-        this.joueurs.put(J.getNomJoueur(),J);
-        return true;
+        this.joueurs.put(J.getNomJoueur(), J);
     }
-    
+
     public boolean supprimerJoueur() {
         interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         this.joueurs.remove(nom);
         return true;
     }
-    
+
     public void débuterPartie() {
-        
-        Hashtable<String,Integer> jeuDé = new Hashtable<>();
+
+        Hashtable<String, Integer> jeuDé = new Hashtable<>();
         for (String nomJoueur : joueurs.keySet()) {
             jeuDé.put(nomJoueur, this.lancerDé());
         }
-        
-        for (int i = 1; i < joueurs.size()+1; i++) {
-            
+
+        for (int i = 0; i < joueurs.size(); i++) {
+
             Object[] max = new Object[2];
-            max[0] = "plop";
+            max[0] = "";
             max[1] = (int) 0;
 
             for (String nomJoueur : jeuDé.keySet()) {
                 if (jeuDé.get(nomJoueur) >= (int) max[1]) {
-                   max[0] = nomJoueur;
-                   max[1] = jeuDé.get(nomJoueur); 
+                    max[0] = nomJoueur;
+                    max[1] = jeuDé.get(nomJoueur);
                 }
             }
-            this.ordreJoueur.put(i, (String) max[0]);
+            this.ordreJoueur.put(i+1, (String) max[0]);
             jeuDé.remove((String) max[0]);
-            this.interface_3.afficherOrdrePassageJoueur(max, i);
+            this.interface_3.afficherOrdrePassageJoueur(max, i+1);
         }
         this.jouerPartie();
     }
-    
+
     private void jouerPartie() {
+
         while (this.ordreJoueur.size() >= 2) {
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
-                int y = 1;
+                int nbLancerDés = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
                 this.interface_3.afficherNomJoueur(j);
-                boolean b = this.jouerCoup(j,y);
+                boolean aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                 this.interface_3.afficherPositionJoueur(j);
-                while (b && y<3) {                
-                    b = this.jouerCoup(j,y);
-                    y++;
-                    if (j.getPositionJoueur() == 31) {
-                        j.metrreEnPrison();
-                        this.interface_3.afficherPositionJoueur(j);
-                    }
+                
+                while (aFaitUnDouble && nbLancerDés < 3) {
+                    aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
+                    nbLancerDés++;
                     this.interface_3.afficherPositionJoueur(j);
                 }
-                //faire jouer coup au joueur sélectionner
+                
                 if (j.getCash() <= 0) {
                     j.joueurMeurt(i);
                 }
@@ -192,11 +185,11 @@ public class Monopoly {
     public int getDeplacement() {
         return deplacement;
     }
-    
-    private boolean jouerCoup(Joueur j, int y){
-        if (j.estEnPrison() && j.getNbCarteEchapper()>0){
+
+    private boolean jouerCoup(Joueur j, int nbLancerDés) {
+        if (j.estEnPrison() && j.getNbCarteEchapper() > 0) {
             this.interface_3.afficherCarteSortiePrison();
-            if(this.interface_3.lireRéponse()){
+            if (this.interface_3.lireRéponse()) {
                 j.retirerCarteEchapper();
                 j.sortirPrison();
             }
@@ -204,20 +197,23 @@ public class Monopoly {
         dé1 = this.lancerDé();
         dé2 = this.lancerDé();
         deplacement = dé1 + dé2;
-        if ((j.estEnPrison() && dé1==dé2) || !j.estEnPrison()) {
+        if ((j.estEnPrison() && dé1 == dé2) || !j.estEnPrison()) {
             j.sortirPrison();
-            j.deplacement(j.getPositionJoueur()+deplacement);
+            j.deplacement(j.getPositionJoueur() + deplacement);
             int p = j.getPositionJoueur();
             Carreau c = this.carreaux.get(p);
-            return dé1==dé2;
+            c.action(j);
+            return dé1 == dé2;
         } else if (j.getPrison() == 3) {
             j.retirerCash(50);
+
             if (j.getCash() > 0) {
                 j.sortirPrison();
                 j.deplacement(j.getPositionJoueur()+deplacement);
             }
             return dé1==dé2;
-        } else if (!j.estEnPrison() && dé1==dé2 && y == 3) {
+        } else if (!j.estEnPrison() && dé1 == dé2 && nbLancerDés == 3) {
+
             j.metrreEnPrison();
             return false;
         } else {
@@ -225,14 +221,14 @@ public class Monopoly {
             return false;
         }
     }
-    
+
     private int lancerDé() {
         Random rand = new Random();
-        return rand.nextInt(6)+1;
+        return rand.nextInt(6) + 1;
     }
 
     void retirerJoueur(Joueur j, int i) {
         this.joueurs.remove(j.getNomJoueur());
         this.ordreJoueur.remove(i);
     }
-} 
+}

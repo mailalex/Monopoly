@@ -2,8 +2,8 @@ package Jeu;
 
 public class Gare extends CarreauPropriete {
 
-    public Gare(int prixLoyer, int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
-        super(prixLoyer, prixAchat, numero, nomCarreau, monopoly);
+    public Gare(int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
+        super(prixAchat, numero, nomCarreau, monopoly);
     }
     
     public void achatGare(Joueur j){
@@ -26,8 +26,9 @@ public class Gare extends CarreauPropriete {
     }
 
     @Override
-    public void calculLoyer() {
-        setLoyer(25*getProprietaire().getGares().size());
+    public int calculLoyer() {
+        return(25*getProprietaire().getGares().size());
+
     }
 
     @Override

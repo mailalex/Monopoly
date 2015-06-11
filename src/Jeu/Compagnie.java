@@ -3,7 +3,7 @@ package Jeu;
 public class Compagnie extends CarreauPropriete {
 
     public Compagnie(int prixAchat, int numero, String nomCarreau, Monopoly monopoly) {
-        super(0, prixAchat, numero, nomCarreau, monopoly);
+        super(prixAchat, numero, nomCarreau, monopoly);
     }
 
     public void achatCompagnie(Joueur j){
@@ -26,11 +26,11 @@ public class Compagnie extends CarreauPropriete {
     }
         
     @Override
-    public void calculLoyer() {
+    public int calculLoyer() {
         if(getProprietaire().getCompagnies().size()==2){
-            setLoyer(10*monopoly.getDeplacement());
+            return(10*monopoly.getDeplacement());
         }else{
-            setLoyer(4*monopoly.getDeplacement());
+            return(4*monopoly.getDeplacement());
         }
     }
     

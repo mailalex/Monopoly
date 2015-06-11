@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Groupe {
     private int prixAchatMaison;
     private CouleurPropriete couleur;
-    private final ArrayList<ProprieteAConstruire> proprietes = new ArrayList<ProprieteAConstruire>();
+    private ArrayList<ProprieteAConstruire> proprietes = new ArrayList<ProprieteAConstruire>();
 
-    public Groupe(int prixAchatMaison, int prixAchatHotel, CouleurPropriete couleur) {
+    public Groupe(int prixAchatMaison, CouleurPropriete couleur) {
         this.prixAchatMaison = prixAchatMaison;
         this.couleur = couleur;
     }
@@ -33,6 +33,10 @@ public class Groupe {
     
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
+    }
+    
+    public void addPropriete(ProprieteAConstruire p){
+        proprietes.add(p);
     }
 
     public int getPrixAchatMaison() {

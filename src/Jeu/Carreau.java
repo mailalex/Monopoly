@@ -3,7 +3,7 @@ package Jeu;
 public abstract class Carreau {
     
     private final int numero;
-    private String nomCarreau;
+    private final String nomCarreau;
     protected final Monopoly monopoly;
 
     public Carreau(int numero, String nomCarreau, Monopoly monopoly) {
@@ -15,8 +15,7 @@ public abstract class Carreau {
     public String getNomCarreau() {
         return nomCarreau;
     }
+    
+     public abstract void action(Joueur j);
 
-    public void setNomCarreau(String nomCarreau) {
-        this.nomCarreau = nomCarreau;
-    }
 }
