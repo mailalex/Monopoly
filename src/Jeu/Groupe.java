@@ -11,9 +11,6 @@ public class Groupe {
         this.prixAchatMaison = prixAchatMaison;
         this.couleur = couleur;
     }
-<<<<<<< HEAD
-    
-=======
    
     public boolean rueConstructible(){
         int nombreMaison=0;
@@ -33,8 +30,7 @@ public class Groupe {
         }else{b=true;}
         return b;
     }
-
->>>>>>> origin/Tim
+    
     public ArrayList<ProprieteAConstruire> getProprietes() {
         return proprietes;
     }
