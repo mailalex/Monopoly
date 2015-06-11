@@ -10,8 +10,24 @@ import java.util.Hashtable;
 import java.util.Random;
 
 public class Monopoly {
-    private final int nbMaisons = 32;
-    private final int nbHotels = 12;
+    private int nbMaisons = 32;
+
+    public int getNbMaisons() {
+        return nbMaisons;
+    }
+
+    public void setNbMaisons(int nbMaisons) {
+        this.nbMaisons = nbMaisons;
+    }
+
+    public int getNbHotels() {
+        return nbHotels;
+    }
+
+    public void setNbHotels(int nbHotels) {
+        this.nbHotels = nbHotels;
+    }
+    private int nbHotels = 12;
     private final Hashtable<Integer,Carreau> carreaux = new Hashtable<Integer,Carreau>();
     private final Hashtable<String,Joueur> joueurs = new Hashtable<String,Joueur>();
     private final Hashtable<Integer,String> ordreJoueur = new Hashtable<Integer, String>();
@@ -56,35 +72,27 @@ public class Monopoly {
                     }
                     P = new ProprieteAConstruire(Integer.parseInt(data.get(i)[6]), g, Integer.parseInt(data.get(i)[5]), Integer.parseInt(data.get(i)[4]), Integer.parseInt(data.get(i)[1]), data.get(i)[2],this);
                     this.carreaux.put(i+1, P);
-                    System.out.println("Propriété :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("G") == 0){
                     Gare G = new Gare(50, Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, G);
-                    System.out.println("Gare :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("C") == 0){
                     Compagnie C = new Compagnie(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, C);
-                    System.out.println("Compagnie :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CT") == 0){
                     CarreauTirage CT = new CarreauTirage(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CT);
-                    System.out.println("Case Tirage :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CA") == 0){
                     CarreauArgent CA = new CarreauArgent(Integer.parseInt(data.get(i)[3]), Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CA);
-                    System.out.println("Case Argent :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
                 else if(caseType.compareTo("CM") == 0){
                     CarreauMouvement CM = new CarreauMouvement(Integer.parseInt(data.get(i)[1]), data.get(i)[2], this);
                     this.carreaux.put(i+1, CM);
-                    System.out.println("Case Mouvement :\t" + data.get(i)[2] + "\t@ case " + data.get(i)[1]);
                 }
-                else
-                    System.err.println("[buildGamePleateau()] : Invalid Data type");
             }
 
         } 
@@ -115,7 +123,7 @@ public class Monopoly {
     }
     
     public boolean créerJoueur() {
-        interface_3.afficher("Nom du joueur : ");
+        interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         Joueur J = new Joueur(nom, this);
         this.joueurs.put(J.getNomJoueur(),J);
@@ -123,16 +131,10 @@ public class Monopoly {
     }
     
     public boolean supprimerJoueur() {
-        interface_3.afficher("Nom du joueur : ");
+        interface_3.afficherDemandeNom();
         String nom = interface_3.lire();
         this.joueurs.remove(nom);
         return true;
-    }
-    
-    public void afficherJoueurs() {
-        for (String nomJoueur : joueurs.keySet()) {
-            this.interface_3.afficherln(nomJoueur);
-        }
     }
     
     public void débuterPartie() {
@@ -156,26 +158,39 @@ public class Monopoly {
             }
             this.ordreJoueur.put(i, (String) max[0]);
             jeuDé.remove((String) max[0]);
-            this.interface_3.afficherln((String) max[0] + " joue à la place : " + i);
+            this.interface_3.afficherOrdrePassageJoueur(max, i);
         }
         this.jouerPartie();
     }
     
     private void jouerPartie() {
+<<<<<<< HEAD
         while (this.ordreJoueur.size() >= 2) {
             this.interface_3.afficherln("");
             this.interface_3.afficherln("");
+=======
+        while (this.ordreJoueur.size() > 2) {
+>>>>>>> origin/Tim
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
                 int y = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
+<<<<<<< HEAD
                 this.interface_3.afficherln(nomJoueur);
+=======
+                this.interface_3.afficherNomJoueur(j);
+>>>>>>> origin/Tim
                 boolean b = this.jouerCoup(j,y);
+<<<<<<< HEAD
                 this.interface_3.afficherln("\t"+j.getPositionJoueur());
                 this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
+=======
+                this.interface_3.afficherPositionJoueur(j);
+>>>>>>> origin/Tim
                 while (b && y<3) {                
                     b = this.jouerCoup(j,y);
                     y++;
+<<<<<<< HEAD
                     this.interface_3.afficherln("\t"+j.getPositionJoueur());
                     Carreau c = this.carreaux.get(j.getPositionJoueur());
                     this.interface_3.afficherln("\t" + c.getNomCarreau());
@@ -185,6 +200,9 @@ public class Monopoly {
                         c = this.carreaux.get(j.getPositionJoueur());
                         this.interface_3.afficherln("\t" + c.getNomCarreau());
                     }
+=======
+                    this.interface_3.afficherPositionJoueur(j);
+>>>>>>> origin/Tim
                 }
                 //faire jouer coup au joueur sélectionner
                 if (j.getCash() <= 0) {
@@ -200,8 +218,8 @@ public class Monopoly {
     
     private boolean jouerCoup(Joueur j, int y){
         if (j.estEnPrison() && j.getNbCarteEchapper()>0){
-            this.interface_3.afficherln("Utiliser la carte libérer de prison?(oui/non)");
-            if(this.interface_3.lire()=="oui"){
+            this.interface_3.afficherCarteSortiePrison();
+            if(this.interface_3.lireRéponse()){
                 j.retirerCarteEchapper();
                 j.sortirPrison();
             }
