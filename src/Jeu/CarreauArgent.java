@@ -7,5 +7,6 @@ public class CarreauArgent extends CarreauAction {
         super(numero, nomCarreau, monopoly);
         this.montant = montant;
     }
-        
+        @Override
+    public void action(Joueur j) {}
 }

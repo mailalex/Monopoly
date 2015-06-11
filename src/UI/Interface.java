@@ -38,7 +38,7 @@ public class Interface {
                 case 1:{
                     so.println("\n");
                     this.monopoly.débuterPartie();
-                    continuer=true;
+                    continuer=false;
                     break;
                 }
                 case 2:{
@@ -94,6 +94,7 @@ public class Interface {
         afficherln(""+j.getCash());
     }
     public void afficherJoueurs(Monopoly m) {
+        afficherln("Nom des joueurs : ");
         for (String nomJoueur : m.getJoueurs().keySet()) {
             afficherln(nomJoueur);
         }
@@ -138,7 +139,9 @@ public class Interface {
     public boolean lireRéponse(){
         String s;
         s = lire();
-        while(!s.equalsIgnoreCase("oui")||!s.equalsIgnoreCase("non")){
+        s = s.toLowerCase();
+        boolean b = s==("oui") || s==("non");
+        while(b/*(!s.equalsIgnoreCase("oui"))||(!s.equalsIgnoreCase("non"))*/){
             afficherln("Saisie incorecte, répondez par oui ou non");
             s = lire();
         }
