@@ -164,45 +164,22 @@ public class Monopoly {
     }
     
     private void jouerPartie() {
-<<<<<<< HEAD
         while (this.ordreJoueur.size() >= 2) {
-            this.interface_3.afficherln("");
-            this.interface_3.afficherln("");
-=======
-        while (this.ordreJoueur.size() > 2) {
->>>>>>> origin/Tim
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
                 int y = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
-<<<<<<< HEAD
-                this.interface_3.afficherln(nomJoueur);
-=======
                 this.interface_3.afficherNomJoueur(j);
->>>>>>> origin/Tim
                 boolean b = this.jouerCoup(j,y);
-<<<<<<< HEAD
-                this.interface_3.afficherln("\t"+j.getPositionJoueur());
-                this.interface_3.afficherln("\t" + this.carreaux.get(j.getPositionJoueur()).getNomCarreau());
-=======
                 this.interface_3.afficherPositionJoueur(j);
->>>>>>> origin/Tim
                 while (b && y<3) {                
                     b = this.jouerCoup(j,y);
                     y++;
-<<<<<<< HEAD
-                    this.interface_3.afficherln("\t"+j.getPositionJoueur());
-                    Carreau c = this.carreaux.get(j.getPositionJoueur());
-                    this.interface_3.afficherln("\t" + c.getNomCarreau());
                     if (j.getPositionJoueur() == 31) {
                         j.metrreEnPrison();
-                        this.interface_3.afficherln("\t"+j.getPositionJoueur());
-                        c = this.carreaux.get(j.getPositionJoueur());
-                        this.interface_3.afficherln("\t" + c.getNomCarreau());
+                        this.interface_3.afficherPositionJoueur(j);
                     }
-=======
                     this.interface_3.afficherPositionJoueur(j);
->>>>>>> origin/Tim
                 }
                 //faire jouer coup au joueur sélectionner
                 if (j.getCash() <= 0) {
