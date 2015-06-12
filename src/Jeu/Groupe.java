@@ -1,6 +1,7 @@
 package Jeu;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Groupe {
     private int prixAchatMaison;
