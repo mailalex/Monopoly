@@ -184,4 +184,8 @@ public class Interface {
     public void afficherJoueurPrison(Joueur j) {
         afficherln(j.getNomJoueur() + " va directement en prison, sans passer par la case départ.");
     }
+
+    public void afficherSeparation() {
+        this.afficherln("----------------------------------------------------------------");
+    }
 }

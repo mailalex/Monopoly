@@ -159,11 +159,10 @@ public class Monopoly {
     }
 
     private void jouerPartie() {
-
+        interface_3.afficherln("");
         while (this.ordreJoueur.size() >= 2) {
-            interface_3.afficherln("");
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
-                
+                interface_3.afficherSeparation();
                 int nbLancerDés = 1;
                 String nomJoueur = this.ordreJoueur.get(i);
                 Joueur j = this.joueurs.get(nomJoueur);
@@ -173,7 +172,6 @@ public class Monopoly {
                     aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                     nbLancerDés++;
                 }
-                interface_3.afficherln("");
                 if (j.getCash() <= 0) {
                     j.joueurMeurt(i);
                 }
