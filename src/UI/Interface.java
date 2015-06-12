@@ -93,7 +93,7 @@ public class Interface {
         afficherln("Impossible de construire une maison");
     }
     public void afficherDemandeNom(){
-        afficherln("Nom de joueur : ");
+        afficher("Nom de joueur : ");
     }
     public void afficherNomJoueur(Joueur j){
         afficherln("Au tour de "+j.getNomJoueur());
