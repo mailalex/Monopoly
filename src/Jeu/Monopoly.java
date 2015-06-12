@@ -161,6 +161,7 @@ public class Monopoly {
     private void jouerPartie() {
 
         while (this.ordreJoueur.size() >= 2) {
+            interface_3.afficherln("");
             for (int i = 1; i <= this.ordreJoueur.size(); i++) {
                 
                 int nbLancerDés = 1;

@@ -8,6 +8,7 @@ import Jeu.ProprieteAConstruire;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import sun.nio.cs.ext.TIS_620;
 
 public class Interface {
     public Monopoly monopoly;
@@ -108,8 +109,10 @@ public class Interface {
     public void afficherDéplacement(Joueur j, int dé1, int dé2){
         if(dé1==dé2){
             afficherln("Double "+dé1+"!");
+        } else {
+            this.afficherln("Dé 1 = " + dé1 + " et dé 2 = " + dé2);
         }
-        afficherln(j.getNomJoueur()+" se déplace de "+ (dé1+dé2) +" et est arrivé sur le carreau "+monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau()+" , case numéro "+(j.getPositionJoueur()-1));
+        afficherln(j.getNomJoueur()+" se déplace de "+ (dé1+dé2) +" et est arrivé sur le carreau "+monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau()+" , case numéro "+(j.getPositionJoueur()));
     }
     public void afficherCarteSortiePrison(){
         afficherln("Utiliser la carte libérer de prison?(oui/non)");
