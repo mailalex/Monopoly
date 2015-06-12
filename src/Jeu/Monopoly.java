@@ -197,7 +197,7 @@ public class Monopoly {
         dé2 = this.lancerDé();
         deplacement = dé1 + dé2;
         if (!j.estEnPrison()) {                                             // j n'est pas en prison
-            if(j.getPositionJoueur()>(j.getPositionJoueur()+deplacement-1)%40){
+            if(j.getPositionJoueur()>(j.getPositionJoueur()+deplacement-1)%40 && j.getPositionJoueur()!=1){
                 interface_3.afficerPassageCaseDépart();
                 j.setCash(j.getCash()+200);
             }
