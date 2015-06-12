@@ -206,6 +206,7 @@ public class Monopoly {
             return dé1 == dé2;
         }else if(j.estEnPrison() && dé1==dé2){                              // j est en prison et a fait un double
             interface_3.afficherSortiePrison(j);
+            j.sortirPrison();
             j.deplacement(j.getPositionJoueur() + deplacement);
             interface_3.afficherDéplacement(j, dé1,dé2);
             Carreau c = this.carreaux.get(j.getPositionJoueur());
@@ -217,6 +218,9 @@ public class Monopoly {
             if (j.getCash() > 0) {
                 j.sortirPrison();
                 j.deplacement(j.getPositionJoueur()+deplacement);
+                interface_3.afficherDéplacement(j, dé1,dé2);
+                Carreau c = this.carreaux.get(j.getPositionJoueur());
+                c.action(j);
             }
             return dé1==dé2;
         } else if (!j.estEnPrison() && dé1 == dé2 && nbLancerDés == 3) {    // j a fait 3 double
