@@ -6,5 +6,8 @@ public class CarreauMouvement extends CarreauAction {
         super(numero, nomCarreau, monopoly);
     }
     @Override
-    public void action(Joueur j) {}
+    public void action(Joueur j) {
+        j.metrreEnPrison();
+        this.monopoly.interface_3.afficherJoueurPrison(j);
+    }
 }

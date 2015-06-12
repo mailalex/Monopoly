@@ -16,6 +16,6 @@ public abstract class Carreau {
         return nomCarreau;
     }
     
-     public abstract void action(Joueur j);
+    public abstract void action(Joueur j);
      
 }
