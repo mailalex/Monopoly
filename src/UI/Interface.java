@@ -143,12 +143,12 @@ public class Interface {
         afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + " au prix de " + a.getPrixAchat() + "?(oui/non)");
     }
     public void demandeConstruction(Jeu.ProprieteAConstruire a){
-        afficherln("La rue "+a.getGroupe().getCouleur().toString()+" est composée de: ");
-        for(int i = 0 ;i<=a.getGroupe().getProprietes().size();i++){
-            afficherln(a.getGroupe().getProprietes().get(i).getNomCarreau()+" : "+
+        afficherln("Le groupe "+a.getGroupe().getCouleur().toString()+" est composé de: ");
+        for(int i = 0 ;i<=a.getGroupe().getProprietes().size()-1;i++){
+            afficherln("\t" + a.getGroupe().getProprietes().get(i).getNomCarreau()+" : "+
                     a.getGroupe().getProprietes().get(i).getNbMaisons()+" maisons, "+a.getGroupe().getProprietes().get(i).getNbHotel()+" hotels.");
-            afficherln("Prix de construction: "+a.getGroupe().getPrixAchatMaison());
-            afficherln("Voulez vous construire sur cette rue?");
+            afficherln("\tPrix de construction: "+a.getGroupe().getPrixAchatMaison());
+            afficherln("\tVoulez vous construire sur cette rue?");
             }
     }
     public void demandeOuConstruire(Jeu.ProprieteAConstruire a){

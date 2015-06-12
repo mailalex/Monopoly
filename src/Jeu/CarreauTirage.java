@@ -8,10 +8,10 @@ public class CarreauTirage extends CarreauAction {
     
     @Override
     public void action(Joueur j) {
-        if (this.getNomCarreau().equals("Chance")) {
-            
-        } else {
-            
-        }
+//        if (this.getNomCarreau().equals("Chance")) {
+//            
+//        } else {
+//            
+//        }
     }
 }

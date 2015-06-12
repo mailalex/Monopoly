@@ -51,13 +51,13 @@ public class ProprieteAConstruire extends CarreauPropriete {
             
     public ArrayList<ProprieteAConstruire> terrainsConstructibles(){
         ArrayList<ProprieteAConstruire>  a = null;
-        for(int i=0;i<=getGroupe().getProprietes().size();i++){                                                 // le cas ou this est pas un terrain constuctible
-            if(getGroupe().getProprietes().get(i).getNbHotel()==0&&getGroupe().getProprietes().get(i).getNbMaisons()<this.getNbMaisons()){    
+        for(int i=0;i<=getGroupe().getProprietes().size()-1;i++){                                                 // le cas ou this est pas un terrain constuctible
+            if(getGroupe().getProprietes().get(i).getNbHotel()==0 && getGroupe().getProprietes().get(i).getNbMaisons()<this.getNbMaisons()){    
                 a.add(getGroupe().getProprietes().get(i));
             }
         }
         if(a==null){
-            for(int i=0;i<=getGroupe().getProprietes().size();i++){                                             // le cas ou this est un terrain constuctible
+            for(int i=0;i<=getGroupe().getProprietes().size()-1;i++){                                             // le cas ou this est un terrain constuctible
                 if(getGroupe().getProprietes().get(i).getNbHotel()==0&&getGroupe().getProprietes().get(i).getNbMaisons()==this.getNbMaisons()){
                     a.add(getGroupe().getProprietes().get(i));
                 }
