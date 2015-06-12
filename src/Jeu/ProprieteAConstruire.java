@@ -69,7 +69,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
     public void construire() {
         boolean veutConstruire = true;
         boolean peutConstruire = true;
-        peutConstruire=(!getGroupe().rueConstructible() && getGroupe().getPrixAchatMaison() < getProprietaire().getCash() && getProprietaire().possèdeRue(groupePropriete));  
+        peutConstruire=(getGroupe().rueConstructible() && getGroupe().getPrixAchatMaison() < getProprietaire().getCash() && getProprietaire().possèdeRue(getGroupe()));  
         if(peutConstruire){                                                                                               // si le joueur peut construire
             monopoly.interface_3.demandeConstruction(this);
             veutConstruire=monopoly.interface_3.lireRéponse();                                                          // si le joueur veut construire

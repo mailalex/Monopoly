@@ -24,11 +24,11 @@ public class Groupe {
         int nombreHotel;
         boolean b;
         if(getNbPropriete()==2){
-            nombreHotel=getProprietes().get(0).getNbHotel()+getProprietes().get(1).getNbHotel();
-            nombreMaison=getProprietes().get(0).getNbMaisons()+getProprietes().get(1).getNbMaisons();
+            nombreHotel=getProprietes().get(0).getNbHotel()+getProprietes().get(1).getNbHotel();  //nombre hotel construit
+            nombreMaison=getProprietes().get(0).getNbMaisons()+getProprietes().get(1).getNbMaisons();  //nombre maison construit
         }else{
-            nombreHotel=getProprietes().get(0).getNbHotel()+getProprietes().get(1).getNbHotel()+getProprietes().get(2).getNbHotel();
-            nombreMaison=getProprietes().get(0).getNbMaisons()+getProprietes().get(1).getNbMaisons()+getProprietes().get(2).getNbHotel();
+            nombreHotel=getProprietes().get(0).getNbHotel()+getProprietes().get(1).getNbHotel()+getProprietes().get(2).getNbHotel();  //nombre hotel construit
+            nombreMaison=getProprietes().get(0).getNbMaisons()+getProprietes().get(1).getNbMaisons()+getProprietes().get(2).getNbHotel();  //nombre maison construit
         }
         if(getNbPropriete()==nombreHotel){                                                                 // si tout est déjà construit sur la rue
             b=false;
