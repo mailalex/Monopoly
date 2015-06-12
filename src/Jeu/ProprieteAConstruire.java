@@ -50,13 +50,13 @@ public class ProprieteAConstruire extends CarreauPropriete {
     }
             
     public ArrayList<ProprieteAConstruire> terrainsConstructibles(){
-        ArrayList<ProprieteAConstruire>  a = null;
+        ArrayList<ProprieteAConstruire>  a = new ArrayList<>();
         for(int i=0;i<=getGroupe().getProprietes().size()-1;i++){                                                 // le cas ou this est pas un terrain constuctible
             if(getGroupe().getProprietes().get(i).getNbHotel()==0 && getGroupe().getProprietes().get(i).getNbMaisons()<this.getNbMaisons()){    
                 a.add(getGroupe().getProprietes().get(i));
             }
         }
-        if(a==null){
+        if(a.isEmpty()){
             for(int i=0;i<=getGroupe().getProprietes().size()-1;i++){                                             // le cas ou this est un terrain constuctible
                 if(getGroupe().getProprietes().get(i).getNbHotel()==0&&getGroupe().getProprietes().get(i).getNbMaisons()==this.getNbMaisons()){
                     a.add(getGroupe().getProprietes().get(i));
@@ -75,22 +75,22 @@ public class ProprieteAConstruire extends CarreauPropriete {
             veutConstruire=monopoly.interface_3.lireRéponse();                                                          // si le joueur veut construire
             while(peutConstruire&&veutConstruire){
                 monopoly.interface_3.demandeOuConstruire(this);
-                int j=monopoly.interface_3.lireOuConstruire(this);                                                      // détermine où le joueur construit
-                if(j!=0){                                                               //retire une maison ou un hotel de monopoly pour l'ajouter sur la propriété
-                    if(this.terrainsConstructibles().get(j).getNbMaisons()!=4){
-                        this.terrainsConstructibles().get(j).setNbMaison(getNbMaisons()+1);                             
+                int i=monopoly.interface_3.lireOuConstruire(this);                                                      // détermine où le joueur construit
+                if(i!=0){                                                               //retire une maison ou un hotel de monopoly pour l'ajouter sur la propriété
+                    if(this.terrainsConstructibles().get(i-1).getNbMaisons()!=4){
+                        this.terrainsConstructibles().get(i-1).setNbMaison(getNbMaisons()+1);                             
                         monopoly.setNbMaisons(monopoly.getNbMaisons()-1);                                                   
                     }else{
-                        this.terrainsConstructibles().get(j).setNbMaison(0);                        
-                        this.terrainsConstructibles().get(j).setNbHotel(1);
+                        this.terrainsConstructibles().get(i-1).setNbMaison(0);                        
+                        this.terrainsConstructibles().get(i-1).setNbHotel(1);
                         monopoly.setNbMaisons(monopoly.getNbMaisons()+4);
                         monopoly.setNbHotels(monopoly.getNbHotels()-1);
                     }
                     getProprietaire().retirerCash(getGroupe().getPrixAchatMaison());                                          //retire l'argent de la construction
-                }
-                peutConstruire=(!getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprietaire().getCash());
-                monopoly.interface_3.demandeConstruction(this);
-                veutConstruire=monopoly.interface_3.lireRéponse();                          // revérifie si le joueur peut et veux construire dans le loop
+                    peutConstruire=(getGroupe().rueConstructible()&&getGroupe().getPrixAchatMaison()<getProprietaire().getCash());   
+                }else{
+                    veutConstruire=false;
+                }                         
             }
          }else{
             monopoly.interface_3.afficherImpossibleConstruire();

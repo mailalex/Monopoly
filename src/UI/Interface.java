@@ -145,16 +145,17 @@ public class Interface {
     public void demandeConstruction(Jeu.ProprieteAConstruire a){
         afficherln("Le groupe "+a.getGroupe().getCouleur().toString()+" est composé de: ");
         for(int i = 0 ;i<=a.getGroupe().getProprietes().size()-1;i++){
-            afficherln("\t" + a.getGroupe().getProprietes().get(i).getNomCarreau()+" : "+
-                    a.getGroupe().getProprietes().get(i).getNbMaisons()+" maisons, "+a.getGroupe().getProprietes().get(i).getNbHotel()+" hotels.");
-            afficherln("\tPrix de construction: "+a.getGroupe().getPrixAchatMaison());
-            afficherln("\tVoulez vous construire sur cette rue?");
-            }
+            afficherln("\t" + a.getGroupe().getProprietes().get(i).getNomCarreau()+" : " + a.getGroupe().getProprietes().get(i).getNbMaisons()+" maisons, " + a.getGroupe().getProprietes().get(i).getNbHotel() + " hotels.");
+        }
+        
+        afficherln("\tPrix de construction: "+a.getGroupe().getPrixAchatMaison());
+        afficherln("\tVoulez vous construire sur cette rue?(oui/non)");
     }
     public void demandeOuConstruire(Jeu.ProprieteAConstruire a){
         afficherln("Sur quel propriété voulez vous construire parmis :");
-        for(int i = 0 ;i<= a.terrainsConstructibles().size();i++){
-            afficherln(a.terrainsConstructibles().get(i).getNomCarreau()+" terrain num "+i);
+        for(int i = 1 ;i<= a.terrainsConstructibles().size();i++){
+            
+            afficherln(i + a.terrainsConstructibles().get(i-1).getNomCarreau() + a.getGroupe().getProprietes().get(i-1).getNbMaisons()+" maisons, " + a.getGroupe().getProprietes().get(i-1).getNbHotel() + " hotels.");
         }
         afficherln("saisissez le numéro de la propriété sur laquel vous voulez construire ou 0 pour arêter les constructions.");
     }
@@ -174,7 +175,7 @@ public class Interface {
     }
     public int lireOuConstruire(Jeu.ProprieteAConstruire a){
         int j =lireInt();
-        while(a.terrainsConstructibles().size()<=j||j<=0){
+        while(a.terrainsConstructibles().size()<j){
             afficherln("Saisie incorecte");
             j = lireInt();
         }
