@@ -44,6 +44,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 j.retirerCash(getPrixAchat());
                 j.addPropriete(this);
                 monopoly.interface_3.afficherCashRestant(j);
+                setProprietaire(j);
             }
         }
     }
@@ -75,7 +76,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
             while(peutConstruire&&veutConstruire){
                 monopoly.interface_3.demandeOuConstruire(this);
                 int j=monopoly.interface_3.lireOuConstruire(this);                                                      // détermine où le joueur construit
-                if(j!=0){                                                       //retire une maison ou un hotel de monopoly pour l'ajouter sur la propriété
+                if(j!=0){                                                               //retire une maison ou un hotel de monopoly pour l'ajouter sur la propriété
                     if(this.terrainsConstructibles().get(j).getNbMaisons()!=4){
                         this.terrainsConstructibles().get(j).setNbMaison(getNbMaisons()+1);                             
                         monopoly.setNbMaisons(monopoly.getNbMaisons()-1);                                                   
@@ -91,7 +92,9 @@ public class ProprieteAConstruire extends CarreauPropriete {
                 monopoly.interface_3.demandeConstruction(this);
                 veutConstruire=monopoly.interface_3.lireRéponse();                          // revérifie si le joueur peut et veux construire dans le loop
             }
-         }
+         }else{
+            monopoly.interface_3.afficherImpossibleConstruire();
+        }
     }
 
     @Override
@@ -118,7 +121,7 @@ public class ProprieteAConstruire extends CarreauPropriete {
         } else if (getProprietaire()== j) {
             construire();
         } else {
-            j.payerLoyer(getProprietaire(), this);
+            j.payerLoyer(this);
 
         }
     }

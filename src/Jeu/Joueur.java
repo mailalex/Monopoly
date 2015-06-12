@@ -63,7 +63,7 @@ public class Joueur {
         return prison;
     }
 
-    private void setCash(int cash) {
+    public void setCash(int cash) {
         this.cash = cash;
     }
 
@@ -123,9 +123,10 @@ public class Joueur {
        return(getProprietesAConstruire().containsAll(groupe.getProprietes()));
     }
     
-    public void payerLoyer(Joueur j, CarreauPropriete c){
-        c.getProprietaire().setCash(cash+c.calculLoyer());
-        j.setCash(cash-c.calculLoyer());
+    public void payerLoyer(CarreauPropriete c){
+        c.getProprietaire().setCash(getCash()+c.calculLoyer());
+        this.setCash(getCash()-c.calculLoyer());
+        monopoly.interface_3.afficherJoueurLoyer(this, c);
     }
 
     public void joueurMeurt(int positionOrdreJoueur) {

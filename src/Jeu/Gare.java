@@ -7,14 +7,16 @@ public class Gare extends CarreauPropriete {
     }
 
     public void achatGare(Joueur j) {
-        if (getPrixAchat() > j.getCash()) {
+        if (getPrixAchat() >= j.getCash()) {
             monopoly.interface_3.afficherPasAssezCash();
-        }
-        monopoly.interface_3.demandeAchat(this);
-        if (monopoly.interface_3.lireRéponse()) {
-            j.retirerCash(getPrixAchat());
-            j.addGare(this);
-            monopoly.interface_3.afficherCashRestant(j);
+        } else {
+            monopoly.interface_3.demandeAchat(this);
+            if (monopoly.interface_3.lireRéponse()) {
+                j.retirerCash(getPrixAchat());
+                j.addGare(this);
+                monopoly.interface_3.afficherCashRestant(j);
+                setProprietaire(j);
+            }
         }
     }
 
@@ -28,7 +30,7 @@ public class Gare extends CarreauPropriete {
         if (getProprietaire() == null) {
             achatGare(j);
         } else if (getProprietaire() != j) {
-            j.payerLoyer(getProprietaire(), this);
+            j.payerLoyer(this);
         }
     }
 }

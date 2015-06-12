@@ -12,6 +12,7 @@ import java.util.Random;
 public class Monopoly {
 
     private int nbMaisons = 32;
+    private int nbHotels = 12;
 
     public int getNbMaisons() {
         return nbMaisons;
@@ -28,7 +29,6 @@ public class Monopoly {
     public void setNbHotels(int nbHotels) {
         this.nbHotels = nbHotels;
     }
-    private int nbHotels = 12;
     private final Hashtable<Integer, Carreau> carreaux = new Hashtable<Integer, Carreau>();
     private final Hashtable<String, Joueur> joueurs = new Hashtable<String, Joueur>();
     private final Hashtable<Integer, String> ordreJoueur = new Hashtable<Integer, String>();
@@ -60,7 +60,7 @@ public class Monopoly {
                 String caseType = data.get(i)[0];
                 if (caseType.compareTo("P") == 0) {
                     if (P != null) {
-                        if (P.getGroupe().equals(CouleurPropriete.valueOf(data.get(i)[3]))) {
+                        if (P.getGroupe().getCouleur().equals(CouleurPropriete.valueOf(data.get(i)[3]))) {
                             g = P.getGroupe();
                         } else {
                             g = new Groupe(Integer.parseInt(data.get(i)[11]), CouleurPropriete.valueOf(data.get(i)[3]));
@@ -69,12 +69,12 @@ public class Monopoly {
                         g = new Groupe(Integer.parseInt(data.get(i)[11]), CouleurPropriete.valueOf(data.get(i)[3]));
                     }
                     ArrayList<Integer> loyer = new ArrayList();
-                    loyer.add(Integer.parseInt(data.get(i)[4]));
                     loyer.add(Integer.parseInt(data.get(i)[5]));
                     loyer.add(Integer.parseInt(data.get(i)[6]));
                     loyer.add(Integer.parseInt(data.get(i)[7]));
                     loyer.add(Integer.parseInt(data.get(i)[8]));
                     loyer.add(Integer.parseInt(data.get(i)[9]));
+                    loyer.add(Integer.parseInt(data.get(i)[10]));
                     P = new ProprieteAConstruire(loyer, Integer.parseInt(data.get(i)[4]), Integer.parseInt(data.get(i)[1]), g, data.get(i)[2], this);
                     g.addPropriete(P);
                     this.carreaux.put(i + 1, P);
@@ -168,14 +168,11 @@ public class Monopoly {
                 Joueur j = this.joueurs.get(nomJoueur);
                 this.interface_3.afficherNomJoueur(j);
                 boolean aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
-                this.interface_3.afficherPositionJoueur(j);
-                
                 while (aFaitUnDouble && nbLancerDés < 3) {
                     aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                     nbLancerDés++;
-                    this.interface_3.afficherPositionJoueur(j);
                 }
-                
+                interface_3.afficherln("");
                 if (j.getCash() <= 0) {
                     j.joueurMeurt(i);
                 }
@@ -187,7 +184,7 @@ public class Monopoly {
         return deplacement;
     }
 
-    private boolean jouerCoup(Joueur j, int nbLancerDés) {
+    private boolean jouerCoup(Joueur j, int nbLancerDés) {                  //j s'échappe de prison grâce à la carte
         if (j.estEnPrison() && j.getNbCarteEchapper() > 0) {
             this.interface_3.afficherCarteSortiePrison();
             if (this.interface_3.lireRéponse()) {
@@ -198,13 +195,24 @@ public class Monopoly {
         dé1 = this.lancerDé();
         dé2 = this.lancerDé();
         deplacement = dé1 + dé2;
-        if (!j.estEnPrison()) {
+        if (!j.estEnPrison()) {                                             // j n'est pas en prison
+            if(j.getPositionJoueur()>(j.getPositionJoueur()+deplacement-1)%40){
+                interface_3.afficerPassageCaseDépart();
+                j.setCash(j.getCash()+200);
+            }
             j.deplacement(j.getPositionJoueur() + deplacement);
-            int p = j.getPositionJoueur();
-            Carreau c = this.carreaux.get(p);
+            interface_3.afficherDéplacement(j,dé1,dé2);
+            Carreau c = this.carreaux.get(j.getPositionJoueur());
             c.action(j);
             return dé1 == dé2;
-        } else if (j.getPrison() == 3) {
+        }else if(j.estEnPrison() && dé1==dé2){                              // j est en prison et a fait un double
+            interface_3.afficherSortiePrison(j);
+            j.deplacement(j.getPositionJoueur() + deplacement);
+            interface_3.afficherDéplacement(j, dé1,dé2);
+            Carreau c = this.carreaux.get(j.getPositionJoueur());
+            c.action(j);
+            return dé1 == dé2;
+        } else if (j.getPrison() == 3) {                                     // j est en prison depuis 3 tours
             j.retirerCash(50);
 
             if (j.getCash() > 0) {
@@ -212,11 +220,11 @@ public class Monopoly {
                 j.deplacement(j.getPositionJoueur()+deplacement);
             }
             return dé1==dé2;
-        } else if (!j.estEnPrison() && dé1 == dé2 && nbLancerDés == 3) {
+        } else if (!j.estEnPrison() && dé1 == dé2 && nbLancerDés == 3) {    // j a fait 3 double
 
             j.metrreEnPrison();
             return false;
-        } else {
+        } else {                                                            // j est en prison est ne  c'est pas échapper
             j.tourPrison();
             return false;
         }

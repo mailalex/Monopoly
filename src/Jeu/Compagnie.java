@@ -6,33 +6,36 @@ public class Compagnie extends CarreauPropriete {
         super(prixAchat, numero, nomCarreau, monopoly);
     }
 
-    public void achatCompagnie(Joueur j){
-        if(getPrixAchat()>j.getCash()){     
+    public void achatCompagnie(Joueur j) {
+        if (getPrixAchat() >= j.getCash()) {
             monopoly.interface_3.afficherPasAssezCash();
-        }
-    monopoly.interface_3.demandeAchat(this);
-    if(monopoly.interface_3.lireRéponse()){
-        j.retirerCash(getPrixAchat());j.addCompagnie(this);
-         monopoly.interface_3.afficherCashRestant(j);
-    }
+        } else {
+            monopoly.interface_3.demandeAchat(this);
+            if (monopoly.interface_3.lireRéponse()) {
+                j.retirerCash(getPrixAchat());
+                j.addCompagnie(this);
+                monopoly.interface_3.afficherCashRestant(j);
+                setProprietaire(j);
             }
-        
+        }
+    }
+
     @Override
     public int calculLoyer() {
-        if(getProprietaire().getCompagnies().size()==2){
-            return(10*monopoly.getDeplacement());
-        }else{
-            return(4*monopoly.getDeplacement());
+        if (getProprietaire().getCompagnies().size() == 2) {
+            return (10 * monopoly.getDeplacement());
+        } else {
+            return (4 * monopoly.getDeplacement());
         }
     }
-    
+
     @Override
     public void action(Joueur j) {
-        if(getProprietaire()==null){
+        if (getProprietaire() == null) {
             achatCompagnie(j);
-        
-        } else if(getProprietaire()!=j){
-            j.payerLoyer(getProprietaire(), this);
+
+        } else if (getProprietaire() != j) {
+            j.payerLoyer(this);
         }
     }
 }

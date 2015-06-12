@@ -17,5 +17,5 @@ public abstract class Carreau {
     }
     
      public abstract void action(Joueur j);
-
+     
 }

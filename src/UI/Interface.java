@@ -1,6 +1,7 @@
 package UI;
 
 import Jeu.Carreau;
+import Jeu.CarreauPropriete;
 import Jeu.Joueur;
 import Jeu.Monopoly;
 import Jeu.ProprieteAConstruire;
@@ -86,13 +87,17 @@ public class Interface {
         afficherln("Pas assez d'argent.");
     }
     public void afficherCashRestant(Joueur j){
-        afficherln("Argent restant : "+j.getCash());
+        afficherln("Cash restant: "+j.getCash());
+    }
+    public void afficherImpossibleConstruire(){
+        afficherln("Impossible de construire une maison");
     }
     public void afficherDemandeNom(){
         afficherln("Nom de joueur : ");
     }
     public void afficherNomJoueur(Joueur j){
-        afficherln(""+j.getCash());
+        afficherln("Au tour de "+j.getNomJoueur());
+        afficherln("Cash: "+j.getCash());
     }
     public void afficherJoueurs(Monopoly m) {
         afficherln("Nom des joueurs : ");
@@ -100,33 +105,46 @@ public class Interface {
             afficherln(nomJoueur);
         }
     }
-    public void afficherDéplacement(Joueur j){
-        afficherln("Le joueur "+j.getNomJoueur()+"est arrivé sur le carreau "+j.getPositionJoueur());
+    public void afficherDéplacement(Joueur j, int dé1, int dé2){
+        if(dé1==dé2){
+            afficherln("Double "+dé1+"!");
+        }
+        afficherln(j.getNomJoueur()+" se déplace de "+ (dé1+dé2) +" et est arrivé sur le carreau "+monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau()+" , case numéro "+(j.getPositionJoueur()-1));
     }
     public void afficherCarteSortiePrison(){
         afficherln("Utiliser la carte libérer de prison?(oui/non)");
     }
-    public void afficherPositionJoueur(Joueur j){
-        afficherln("\t" + monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau());
-    }
     public void afficherOrdrePassageJoueur(Object[] max, int i){
         afficherln((String) max[0] + " joue à la place : " + i);
+    }
+    public void afficherSortiePrison(Joueur j){
+         afficherln(j.getNomJoueur()+"a fait un double et est sorti de prison");
+    }
+    public void afficherJoueurLoyer(Joueur j, CarreauPropriete c){
+        afficherln(j.getNomJoueur()+" est tombé sur la case de "+c.getProprietaire().getNomJoueur()+" et doit lui payer "+c.calculLoyer());
+        afficherCashRestant(j);
+    }
+    public void afficherJoueurMort(Joueur j){
+        afficherln("Le joueur "+j.getNomJoueur()+" n'a plus d'argent, il est donc éliminé est toutes ces propriétés sont de nouveau à vendre.");
+    }
+    public void afficerPassageCaseDépart(){
+        afficherln("Vous êtes passé par la case départ, recevez 200€");
     }
     
     //Demande
     
     public void demandeAchatPropriete(Jeu.ProprieteAConstruire a){
-        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + "au prix de " + a.getPrixAchat() + "du groupe" + a.getGroupe().getCouleur().toString() + "?(oui/non)");
+        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + " au prix de " + a.getPrixAchat() + " du groupe " + a.getGroupe().getCouleur().toString() + "?(oui/non)");
     }
     public void demandeAchat(Jeu.CarreauPropriete a){
-        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + "au prix de " + a.getPrixAchat() + "?(oui/non)");
+        afficherln("Voulez-vous acheter le terrain " + a.getNomCarreau() + " au prix de " + a.getPrixAchat() + "?(oui/non)");
     }
     public void demandeConstruction(Jeu.ProprieteAConstruire a){
-        afficherln("La rue"+a.getGroupe().getCouleur().toString()+"est composée de: ");
+        afficherln("La rue "+a.getGroupe().getCouleur().toString()+" est composée de: ");
         for(int i = 0 ;i<=a.getGroupe().getProprietes().size();i++){
             afficherln(a.getGroupe().getProprietes().get(i).getNomCarreau()+" : "+
                     a.getGroupe().getProprietes().get(i).getNbMaisons()+" maisons, "+a.getGroupe().getProprietes().get(i).getNbHotel()+" hotels.");
-            afficherln("Prix de construction"+a.getGroupe().getPrixAchatMaison());
+            afficherln("Prix de construction: "+a.getGroupe().getPrixAchatMaison());
             afficherln("Voulez vous construire sur cette rue?");
             }
     }
@@ -144,7 +162,7 @@ public class Interface {
         String s;
         s = lire();
         s = s.toLowerCase();
-        while(s==("oui") || s==("non")){
+        while(!(s.equals("oui") || s.equals("non"))){
             afficherln("Saisie incorecte, répondez par oui ou non");
             s = lire();
             s = s.toLowerCase();
@@ -154,7 +172,7 @@ public class Interface {
     public int lireOuConstruire(Jeu.ProprieteAConstruire a){
         int j =lireInt();
         while(a.terrainsConstructibles().size()<=j||j<=0){
-            afficherln("Saisie incorecte, répondez par oui ou non");
+            afficherln("Saisie incorecte");
             j = lireInt();
         }
         return j;
