@@ -151,9 +151,9 @@ public class Monopoly {
                     max[1] = jeuDé.get(nomJoueur);
                 }
             }
-            this.ordreJoueur.put(i+1, (String) max[0]);
+            this.ordreJoueur.put(i + 1, (String) max[0]);
             jeuDé.remove((String) max[0]);
-            this.interface_3.afficherOrdrePassageJoueur(max, i+1);
+            this.interface_3.afficherOrdrePassageJoueur(max, i + 1);
         }
         this.jouerPartie();
     }
@@ -169,8 +169,8 @@ public class Monopoly {
                 this.interface_3.afficherNomJoueur(j);
                 boolean aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                 while (aFaitUnDouble && nbLancerDés < 3) {
-                    aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                     nbLancerDés++;
+                    aFaitUnDouble = this.jouerCoup(j, nbLancerDés);
                 }
                 if (j.getCash() <= 0) {
                     j.joueurMeurt(i);
@@ -194,42 +194,44 @@ public class Monopoly {
         dé1 = this.lancerDé();
         dé2 = this.lancerDé();
         deplacement = dé1 + dé2;
-        if (!j.estEnPrison()) {                                             // j n'est pas en prison
-            if(j.getPositionJoueur()>(j.getPositionJoueur()+deplacement-1)%40 && j.getPositionJoueur()!=1){
-                interface_3.afficerPassageCaseDépart();
-                j.setCash(j.getCash()+200);
-            }
-            j.deplacement(j.getPositionJoueur() + deplacement);
-            interface_3.afficherDéplacement(j,dé1,dé2);
-            Carreau c = this.carreaux.get(j.getPositionJoueur());
-            c.action(j);
-            return dé1 == dé2;
-        }else if(j.estEnPrison() && dé1==dé2){                              // j est en prison et a fait un double
-            interface_3.afficherSortiePrison(j);
-            j.sortirPrison();
-            j.deplacement(j.getPositionJoueur() + deplacement);
-            interface_3.afficherDéplacement(j, dé1,dé2);
-            Carreau c = this.carreaux.get(j.getPositionJoueur());
-            c.action(j);
-            return dé1 == dé2;
-        } else if (j.getPrison() == 3) {                                     // j est en prison depuis 3 tours
-            j.retirerCash(50);
-
-            if (j.getCash() > 0) {
-                j.sortirPrison();
-                j.deplacement(j.getPositionJoueur()+deplacement);
-                interface_3.afficherDéplacement(j, dé1,dé2);
+        if (dé1 == dé2 && nbLancerDés == 3) {
+            j.metrreEnPrison();             // j a fait 3 doubles
+            return false;
+        } else {
+            deplacement = dé1 + dé2;
+            if (!j.estEnPrison()) {                                             // j n'est pas en prison
+                if (j.getPositionJoueur() > (j.getPositionJoueur() + deplacement - 1) % 40 && j.getPositionJoueur() != 1) {
+                    interface_3.afficerPassageCaseDépart();
+                    j.setCash(j.getCash() + 200);
+                }
+                j.deplacement(j.getPositionJoueur() + deplacement);
+                interface_3.afficherDéplacement(j, dé1, dé2);
                 Carreau c = this.carreaux.get(j.getPositionJoueur());
                 c.action(j);
-            }
-            return dé1==dé2;
-        } else if (!j.estEnPrison() && dé1 == dé2 && nbLancerDés == 3) {    // j a fait 3 double
+                return dé1 == dé2;
+            } else if (j.estEnPrison() && dé1 == dé2) {                              // j est en prison et a fait un double
+                interface_3.afficherSortiePrison(j);
+                j.sortirPrison();
+                j.deplacement(j.getPositionJoueur() + deplacement);
+                interface_3.afficherDéplacement(j, dé1, dé2);
+                Carreau c = this.carreaux.get(j.getPositionJoueur());
+                c.action(j);
+                return dé1 == dé2;
+            } else if (j.getPrison() == 3) {                                     // j est en prison depuis 3 tours
+                j.retirerCash(50);
 
-            j.metrreEnPrison();
-            return false;
-        } else {                                                            // j est en prison est ne  c'est pas échapper
-            j.tourPrison();
-            return false;
+                if (j.getCash() > 0) {
+                    j.sortirPrison();
+                    j.deplacement(j.getPositionJoueur() + deplacement);
+                    interface_3.afficherDéplacement(j, dé1, dé2);
+                    Carreau c = this.carreaux.get(j.getPositionJoueur());
+                    c.action(j);
+                }
+                return dé1 == dé2;
+            } else {                                                            // j est en prison est ne  c'est pas échapper
+                j.tourPrison();
+                return false;
+            }
         }
     }
 
@@ -242,4 +244,112 @@ public class Monopoly {
         this.joueurs.remove(j.getNomJoueur());
         this.ordreJoueur.remove(i);
     }
+
+    // test mode
+    public void créerJoueurAuto() {
+        Joueur J = new Joueur("Joueur 1", this);
+        this.joueurs.put(J.getNomJoueur(), J);
+        Joueur H = new Joueur("Joueur 2", this);
+        this.joueurs.put(H.getNomJoueur(), H);
+    }
+
+    public void débuterTestMode() {
+
+        Hashtable<String, Integer> jeuDé = new Hashtable<>();
+        for (String nomJoueur : joueurs.keySet()) {
+            jeuDé.put(nomJoueur, this.lancerDé());
+        }
+
+        for (int i = 0; i < joueurs.size(); i++) {
+
+            Object[] max = new Object[2];
+            max[0] = "";
+            max[1] = (int) 0;
+
+            for (String nomJoueur : jeuDé.keySet()) {
+                if (jeuDé.get(nomJoueur) >= (int) max[1]) {
+                    max[0] = nomJoueur;
+                    max[1] = jeuDé.get(nomJoueur);
+                }
+            }
+            this.ordreJoueur.put(i + 1, (String) max[0]);
+            jeuDé.remove((String) max[0]);
+            this.interface_3.afficherOrdrePassageJoueur(max, i + 1);
+        }
+        this.jouerTest();
+    }
+
+    private void jouerTest() {
+        interface_3.afficherln("");
+        while (this.ordreJoueur.size() >= 2) {
+            for (int i = 1; i <= this.ordreJoueur.size(); i++) {
+                interface_3.afficherSeparation();
+                int nbLancerDés = 1;
+                String nomJoueur = this.ordreJoueur.get(i);
+                Joueur j = this.joueurs.get(nomJoueur);
+                this.interface_3.afficherNomJoueur(j);
+                boolean aFaitUnDouble = jouerCoupTest(j, nbLancerDés);
+                while (aFaitUnDouble && nbLancerDés < 3) {
+                    nbLancerDés++;
+                    aFaitUnDouble = jouerCoupTest(j, nbLancerDés);
+                }
+                if (j.getCash() <= 0) {
+                    j.joueurMeurt(i);
+                }
+            }
+        }
+    }
+
+    private boolean jouerCoupTest(Joueur j, int nbLancerDés) {
+        if (j.estEnPrison() && j.getNbCarteEchapper() > 0) {
+            this.interface_3.afficherCarteSortiePrison();        //j s'échappe de prison grâce à la carte
+            if (this.interface_3.lireRéponse()) {
+                j.retirerCarteEchapper();
+                j.sortirPrison();
+            }
+        }
+        dé1 = interface_3.lireDé1();
+        dé2 = interface_3.lireDé2();
+        deplacement = dé1 + dé2;
+        if (dé1 == dé2 && nbLancerDés == 3) {
+            j.metrreEnPrison();             // j a fait 3 doubles
+            return false;
+        } else {
+            deplacement = dé1 + dé2;
+            if (!j.estEnPrison()) {                                             // j n'est pas en prison
+                if (j.getPositionJoueur() > (j.getPositionJoueur() + deplacement - 1) % 40 && j.getPositionJoueur() != 1) {
+                    interface_3.afficerPassageCaseDépart();
+                    j.setCash(j.getCash() + 200);
+                }
+                j.deplacement(j.getPositionJoueur() + deplacement);
+                interface_3.afficherDéplacement(j, dé1, dé2);
+                Carreau c = this.carreaux.get(j.getPositionJoueur());
+                c.action(j);
+                return dé1 == dé2;
+            } else if (j.estEnPrison() && dé1 == dé2) {                              // j est en prison et a fait un double
+                interface_3.afficherSortiePrison(j);
+                j.sortirPrison();
+                j.deplacement(j.getPositionJoueur() + deplacement);
+                interface_3.afficherDéplacement(j, dé1, dé2);
+                Carreau c = this.carreaux.get(j.getPositionJoueur());
+                c.action(j);
+                return dé1 == dé2;
+            } else if (j.getPrison() == 3) {                                     // j est en prison depuis 3 tours
+                j.retirerCash(50);
+
+                if (j.getCash() > 0) {
+                    j.sortirPrison();
+                    j.deplacement(j.getPositionJoueur() + deplacement);
+                    interface_3.afficherDéplacement(j, dé1, dé2);
+                    Carreau c = this.carreaux.get(j.getPositionJoueur());
+                    c.action(j);
+                }
+                return dé1 == dé2;
+            } else {                                                            // j est en prison est ne  c'est pas échapper
+                j.tourPrison();
+                return false;
+            }
+        }
+    }
+
 }

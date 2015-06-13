@@ -8,10 +8,6 @@ public class CarreauTirage extends CarreauAction {
     
     @Override
     public void action(Joueur j) {
-//        if (this.getNomCarreau().equals("Chance")) {
-//            
-//        } else {
-//            
-//        }
+          monopoly.interface_3.notSupportedYet();
     }
 }

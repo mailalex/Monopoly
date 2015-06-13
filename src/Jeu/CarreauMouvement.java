@@ -8,6 +8,5 @@ public class CarreauMouvement extends CarreauAction {
     @Override
     public void action(Joueur j) {
         j.metrreEnPrison();
-        this.monopoly.interface_3.afficherJoueurPrison(j);
     }
 }

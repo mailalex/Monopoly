@@ -24,15 +24,15 @@ public class Interface {
         
         while (continuer) {            
             so.println("\n\n");
-            so.println("\t*******************************");
-            so.println("\t*\t      Menu            *");
-            so.println("\t*  *  *  *  *  *  *  *  *  *  *");
-            so.println("\t*1:\tCommencer à jouer     *");
-            so.println("\t*2:\tAjouter un joueur     *");
-            so.println("\t*3:\tSupprimer un joueur   *");
-            so.println("\t*4:\tListe des joueurs     *");
-            so.println("\t*5:\tQuitter               *");
-            so.println("\t*******************************");
+            so.println("\t*********************************************");
+            so.println("\t*\t            Menu                    *");
+            so.println("\t*  *  *  *  *  *  *  *  *  *  * * * * * * * *");
+            so.println("\t*1:\tCommencer à jouer (min 2 joueurs)   *");
+            so.println("\t*2:\tAjouter un joueur                   *");
+            so.println("\t*3:\tSupprimer un joueur                 *");
+            so.println("\t*4:\tTest mode (joueurs créés auto)      *");
+            so.println("\t*5:\tQuitter                             *");
+            so.println("\t*********************************************");
 
             so.print("      Votre Choix : ");
             int choix = sc.nextInt();
@@ -55,8 +55,9 @@ public class Interface {
                     break;
                 }
                 case 4:{
-                    afficherJoueurs(monopoly);
-                    continuer=true;
+                    monopoly.créerJoueurAuto();
+                    monopoly.débuterTestMode();
+                    continuer=false;
                     break;
                 }
                 default:
@@ -112,7 +113,7 @@ public class Interface {
         } else {
             this.afficherln("Dé 1 = " + dé1 + " et dé 2 = " + dé2);
         }
-        afficherln(j.getNomJoueur()+" se déplace de "+ (dé1+dé2) +" et est arrivé sur le carreau "+monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau()+" , case numéro "+(j.getPositionJoueur()));
+        afficherln(j.getNomJoueur()+" se déplace de "+ (dé1+dé2) +" et est arrivé sur le carreau "+monopoly.getCarreaux().get(j.getPositionJoueur()).getNomCarreau()+" , case numéro "+(j.getPositionJoueur()-1));
     }
     public void afficherCarteSortiePrison(){
         afficherln("Utiliser la carte libérer de prison?(oui/non)");
@@ -155,9 +156,17 @@ public class Interface {
         afficherln("Sur quel propriété voulez vous construire parmis :");
         for(int i = 1 ;i<= a.terrainsConstructibles().size();i++){
             
-            afficherln(i + a.terrainsConstructibles().get(i-1).getNomCarreau() + a.getGroupe().getProprietes().get(i-1).getNbMaisons()+" maisons, " + a.getGroupe().getProprietes().get(i-1).getNbHotel() + " hotels.");
+            afficherln(i +" "+ a.terrainsConstructibles().get(i-1).getNomCarreau() +" " + a.getGroupe().getProprietes().get(i-1).getNbMaisons()+" maisons, " + a.getGroupe().getProprietes().get(i-1).getNbHotel() + " hotels.");
         }
         afficherln("saisissez le numéro de la propriété sur laquel vous voulez construire ou 0 pour arêter les constructions.");
+    }
+    
+    public void afficherJoueurPrison(Joueur j) {
+        afficherln(j.getNomJoueur() + " va directement en prison, sans passer par la case départ.");
+    }
+
+    public void afficherSeparation() {
+        this.afficherln("----------------------------------------------------------------");
     }
     
     //Lecture
@@ -181,12 +190,19 @@ public class Interface {
         }
         return j;
     }
-
-    public void afficherJoueurPrison(Joueur j) {
-        afficherln(j.getNomJoueur() + " va directement en prison, sans passer par la case départ.");
+    
+    
+    //pour le test
+    
+    public int lireDé1(){
+        afficher("Saisir le dé1: ");
+        return lireInt();
     }
-
-    public void afficherSeparation() {
-        this.afficherln("----------------------------------------------------------------");
+    public int lireDé2(){
+        afficher("Saisir le dé2: ");
+        return lireInt();
+    }
+    public void notSupportedYet(){
+        afficherln("Not supported yet");
     }
 }

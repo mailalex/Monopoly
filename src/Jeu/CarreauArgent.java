@@ -10,5 +10,6 @@ public class CarreauArgent extends CarreauAction {
         @Override
     public void action(Joueur j) {
         j.setCash(j.getCash() + montant);
+        monopoly.interface_3.afficherCashRestant(j);
     }
 }

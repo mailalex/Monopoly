@@ -95,6 +95,7 @@ public class Joueur {
     public void metrreEnPrison() {
         this.setPrison(1);
         this.setPositionJoueur(11);
+        monopoly.interface_3.afficherJoueurPrison(this);
     }
     
     public void tourPrison() {
