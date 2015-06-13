@@ -109,6 +109,8 @@ public class ProprieteAConstruire extends CarreauPropriete {
             return loyer.get(2);
         }else if(nbMaisons==1){
             return loyer.get(1);
+        }else if(nbMaisons==0&& getProprietaire().possèdeRue(getGroupe())){
+            return loyer.get(0)*2;
         }else{
             return loyer.get(0);
         }
